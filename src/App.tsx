@@ -6,7 +6,7 @@ function App() {
 
   return (
     <section>
-      <h1 className="bg-red-600 text-yellow-500">Linkly</h1>
+      <h1 className="bg-red-600 text-yellow-500">Linkly &#x24C7;</h1>
     </section>
   );
 }
