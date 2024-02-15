@@ -4,7 +4,7 @@ import "./landing.css";
 
 const LandingPage: React.FC = () => {
   return (
-    <section className="landingPage  font-inter h-screen">
+    <section className="landingPage font-inter ">
       <NavBar />
 
       <div>

@@ -12,7 +12,7 @@ export default {
         primaryBlack: '#0B101B',
         primaryGrey: '#181E29',
         primaryLite: '#C9CED6',
-
+        stroke: '#353C4A'
       },
       fontFamily: {
         inter: "Inter, sans-serif",

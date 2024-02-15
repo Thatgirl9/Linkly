@@ -44,6 +44,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+@media screen and (max-width: 768px) {
+  :root {
+    background-image: url(../src/assets/Cubes.png);
+  }
+}
+
 /*
 
 a {
