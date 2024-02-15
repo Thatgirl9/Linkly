@@ -1,9 +1,12 @@
+import NavBar from "../../components/Nav";
 import "./landing.css";
 // import bgImage from "../../assets/Group 17.png";
 
 const LandingPage: React.FC = () => {
   return (
     <section className="landingPage  font-inter h-screen">
+      <NavBar />
+
       <div>
         {/* <img src={bgImage} className="w-full " /> */}
         {/* <div className="flex justify-between items-center">
