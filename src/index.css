@@ -1,9 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap")
-  @tailwind base;
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
+
+@tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
+/* :root {
   background-image: url(../src/assets/Group\ 17.png);
   background-size: 100%;
   background-repeat: no-repeat;
@@ -15,7 +16,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-family: "Inter", sans-serif;
-}
+} */
 
 /* ***** */
 
@@ -42,6 +43,10 @@
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  width: 100%;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
 }
 
 @media screen and (max-width: 768px) {

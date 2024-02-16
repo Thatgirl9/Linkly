@@ -18,15 +18,15 @@ const NavBar: React.FC = () => {
     `}
     >
       {/* second header */}
-      <nav className="lg:flex lg:justify-between lg:items-center">
+      <nav className="md:flex md:justify-between md:items-center">
         {/* Logo Hamburger */}
         <div className="flex items-center justify-between">
-          <img src={Icon} className="h-[46px]" />
+          <img src={Icon} className="h-[46px]" alt="Logo" />
 
           {/* Hamburger */}
           <button
             onClick={() => setOpen(!open)}
-            className="w-6 h-6 text-4xl text-textPrimary lg:hidden bg-transparent border-none"
+            className="w-6 h-6 text-4xl text-textPrimary md:hidden bg-transparent border-none"
           >
             <ion-icon
               name={open ? "close" : "menu"}
@@ -38,10 +38,14 @@ const NavBar: React.FC = () => {
         {/* Links */}
 
         <div
-          className={`links h-0 overflow-y-hidden transition-all lg:h-auto bg-primaryGrey lg:bg-transparent absolute top-[4em] right-0 lg:relative lg:top-0 lg:right-0 lg:border-none  lg:rounded-none duration-150 ease-in-out z-50 nav__div 
-          ${open ? "h-[100vh] md:w-[50%] w-[60%] overflow-y-auto" : "h-0 "}`}
+          className={`links h-0 overflow-hidden transition-all md:h-auto bg-primaryGrey md:bg-transparent absolute top-[4em] right-0 md:relative md:top-0 md:right-0 md:border-none  md:rounded-none ease-in-out z-50 nav__div 
+          ${
+            open
+              ? "h-[100vh] md:w-fit w-[60%] right-0"
+              : "h-0 w-0 md:w-fit right-[-10em] "
+          }`}
         >
-          <ul className="flex lg:flex-row lg:gap-6 text-white font-inter font-normal gap-[1.4em] justify-end lg:justify-normal lg:items-center items-end flex-col  px-5 py-8  lg:mx-0 lg:p-0  border-surfaceSecondary lg:border-none list-none border-red-500 border ">
+          <ul className="flex md:flex-row md:gap-6 text-white font-inter font-normal gap-[1.4em] justify-end md:justify-normal md:items-center items-end flex-col  px-5 py-8  md:mx-0 md:p-0  md:border-none list-none">
             {Links.map((link) => (
               <li key={link.name}>
                 <a
@@ -51,6 +55,7 @@ const NavBar: React.FC = () => {
                     ? { target: "_blank" }
                     : { target: "_self" })}
                   rel="noreferrer"
+                  onClick={() => setOpen(!open)}
                 >
                   {link.name}
                 </a>
