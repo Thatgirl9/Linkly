@@ -64,7 +64,7 @@ const NavBar: React.FC = () => {
 
             <button className="rounded-3xl  bg-primaryGrey login-btn shadow-sm hover:text-primaryLite">
               <Link
-                to="/loginpage"
+                to="/login"
                 className="flex gap-[0.4em] items-center justify-center  py-2 px-3 text-white font-semibold transition-all ease-in-out no-underline text-sm hover:text-primaryLite"
               >
                 <span>Login</span>

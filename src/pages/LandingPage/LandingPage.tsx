@@ -1,9 +1,13 @@
 import Features from "../../components/Features";
 import NavBar from "../../components/Nav";
-import "./landing.css";
-// import bgImage from "../../assets/Group 17.png";
-import InputLink from "../../assets/link.png";
 import ToggleSwitch from "../../components/ToggleSwitch";
+import "./landing.css";
+import { Link } from "react-router-dom";
+
+import InputLink from "../../assets/link.png";
+import QuestionCircle from "../../assets/question-circle.png";
+import LaptopTable from "../../assets/Frame 39.png";
+import MobileTable from "../../assets/Frame 39 (1).png";
 
 const LandingPage: React.FC = () => {
   const handleToggle = (checked: boolean) => {
@@ -13,7 +17,7 @@ const LandingPage: React.FC = () => {
   return (
     <section className="landingPage font-inter">
       <NavBar />
-      <div className="hero pt-[8em] lg:pt-[10em] justify-center items-center flex flex-col gap-[3.7em] landing-page-div ">
+      <div className="hero pt-[8em] lg:pt-[10em] justify-center items-center flex flex-col gap-[3.5em] landing-page-div ">
         {/* Texts */}
         <div className="hero-text text-center flex flex-col gap-2 w-[90%] md:w-[95%] lg:w-fit">
           <h1 className="text-4xl lg:text-5xl  font-extrabold text-white hero__p">
@@ -28,7 +32,7 @@ const LandingPage: React.FC = () => {
         </div>
 
         {/* Link Input, Toggle Switch and so.... */}
-        <div className="flex flex-col gap-[1.7em] justify-center items-center">
+        <div className="flex flex-col gap-[1.9em] lg:gap-[1.5em] justify-center items-center">
           {/* Link Input */}
           <div className="sm:w-[30em] w-[90%]  rounded-full flex items-center justify-center gap-2 bg-primaryGrey px-[0.3em] h-[3.3em] border-[3px] border-stroke">
             <img
@@ -45,9 +49,60 @@ const LandingPage: React.FC = () => {
             </button>
           </div>
 
-          {/* Toggle switch and Texts  */}
-          <div>
-            <ToggleSwitch onChange={handleToggle} />
+          {/* Toggle switch and Texts */}
+          <div className="flex flex-col justify-center items-center text-primaryLite gap-[1.3em]">
+            <div className="flex gap-4 items-center justify-center">
+              <ToggleSwitch onChange={handleToggle} />
+              <p className="text-base">Auto Paste from Clipboard </p>
+            </div>
+            <p className="text-sm flex justify-center items-center text-center gap-2 text-primaryLite">
+              <span>
+                You can create{" "}
+                <span className="text-primaryPink font-semibold">05</span> more
+                links.
+                <br className="md:hidden block"></br>{" "}
+                <Link
+                  to="/register"
+                  className="underline sm:no-underline font-semibold sm:font-normal cursor-pointer sm:hover:underline"
+                >
+                  Register Now
+                </Link>{" "}
+                to enjoy Unlimited usage
+              </span>
+
+              <span>
+                <img
+                  src={QuestionCircle}
+                  className="w-[1em] h-[1em] hidden md:block"
+                  alt="Question Mark in a Circle"
+                />
+              </span>
+            </p>
+          </div>
+
+          {/* Pictures */}
+          <div className="table-div flex justify-center items-center w-[90%] lg:w-[80%] mt-[2em]">
+            <div className="laptop-img-div hover:cursor-pointer hidden md:block">
+              <img
+                src={LaptopTable}
+                alt="Table showing Links Shortened on Desktop Screen"
+              />
+              <p className="text-sm text-primaryLite text-center mt-[-2em]">
+                <Link
+                  to="/register"
+                  className="text-primaryBlue underline pr-1"
+                >
+                  Register Now
+                </Link>
+                to enjoy Unlimited History
+              </p>
+            </div>
+            <div className="mobile-img-div hover:cursor-pointer block md:hidden">
+              <img
+                src={MobileTable}
+                alt="Table showing Links Shortened on Mobile Screen"
+              />
+            </div>
           </div>
         </div>
       </div>
