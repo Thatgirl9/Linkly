@@ -4,20 +4,6 @@
 @tailwind components;
 @tailwind utilities;
 
-/* :root {
-  background-image: url(../src/assets/Group\ 17.png);
-  background-size: 100%;
-  background-repeat: no-repeat;
-  background-color: #0b101b;
-  color-scheme: light dark;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  font-family: "Inter", sans-serif;
-} */
-
 /* ***** */
 
 * {
@@ -31,6 +17,7 @@
   background-size: 100%;
   background-repeat: no-repeat;
   background-color: #0b101b;
+  /* background-color: white; */
   color-scheme: light dark;
 
   font-family: "Inter", sans-serif;
