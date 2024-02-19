@@ -16,19 +16,19 @@ const LandingPage: React.FC = () => {
 
           <p className="text-primaryLite text-base">
             Linkly is an efficient and easy-to-use URL shortening service that
-            streamlines your<br className="hidden lg:block"></br> online
+            streamlines your<br className="hidden md:block"></br> online
             experience.
           </p>
         </div>
 
-        <div className="sm:w-[30em] w-[96%]  rounded-full flex items-center justify-center gap-2 bg-primaryGrey px-[0.3em] h-[3.3em] border-[3px] border-stroke">
+        <div className="sm:w-[30em] w-[90%]  rounded-full flex items-center justify-center gap-2 bg-primaryGrey px-[0.3em] h-[3.3em] border-[3px] border-stroke">
           <img
             src={InputLink}
             alt="Link Icon"
             className="h-[1.2em] w-[2em] pl-[0.5em]"
           />
           <input
-            className="bg-transparent outline-none w-[28em]"
+            className="bg-transparent outline-none sm:w-[28em] w-[70%]"
             placeholder="Enter the link here"
           ></input>
           <button className="bg-primaryBlue text-white font-semibold px-4 py-2 rounded-full shadow-2xl shadow-primaryBlue">
