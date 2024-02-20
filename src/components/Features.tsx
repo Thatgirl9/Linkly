@@ -67,7 +67,7 @@ const Features: React.FC = () => {
           return (
             <div
               key={index}
-              className="flex flex-col gap-[1em] border border-primaryGrey rounded-xl p-4 hover:cursor-pointer hover:shadow-lg hover:shadow-primaryGrey"
+              className="flex flex-col gap-[1em] border border-primaryGrey rounded-xl p-4 hover:cursor-pointer hover:shadow-lg hover:shadow-primaryGrey w-[97%] md:w-fit"
             >
               <div>
                 <img src={reason.image} alt={reason.alt} />

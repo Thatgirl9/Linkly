@@ -4,7 +4,7 @@ import WhiteCheck from "../assets/PricingAssets/check-circle (1).svg";
 const Pricing: React.FC = () => {
   const FreePlan = [
     {
-      image: WhiteCheck,
+      image: BlueCheck,
       alt: "Check Icon",
       title: "Unlimited URL Shortening",
     },
@@ -43,13 +43,15 @@ const Pricing: React.FC = () => {
       </div>
 
       {/* Pricing Div */}
-      <div>
+      <div className="flex flex-col md:flex-row gap-[1.6em] md:gap-0">
         {/* Free Pricing Div */}
-        <div className="border border-stroke p-7 flex justify-center items-left flex-col">
-          <h2 className="text-primaryLite font-bold text-3xl ">Basic</h2>
-          <h3>Free</h3>
+        <div className="border border-stroke rounded-lg p-7 py-8 flex justify-center items-left flex-col text-primaryLite hover:shadow-lg hover:shadow-primaryGrey">
+          <h2 className=" font-medium text-base pb-[0.6em]">Basic</h2>
+          <h3 className="font-bold pb-[0.3em] text-3xl">Free</h3>
 
-          <p>Free plans for all users</p>
+          <p className="font-medium text-base pb-[0.4em]">
+            Free plans for all users
+          </p>
 
           <ul className="text-left pt-3 flex flex-col gap-4">
             {FreePlan.map((free, index) => {
@@ -63,6 +65,16 @@ const Pricing: React.FC = () => {
               );
             })}
           </ul>
+        </div>
+
+        {/* 5 dollars Pricing Div */}
+        <div className="border border-stroke rounded-lg p-7 py-8 flex justify-center items-left flex-col text-primaryLite hover:shadow-lg hover:shadow-primaryGrey bg-primaryGrey">
+          <h2 className=" font-medium text-base pb-[0.6em]">Professional</h2>
+          <h3 className="font-bold pb-[0.3em] text-3xl">$5/month</h3>
+
+          <p className="font-medium text-base pb-[0.4em]">
+            Ideal for business creators
+          </p>
         </div>
       </div>
     </section>
