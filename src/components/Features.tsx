@@ -44,7 +44,7 @@ const Features: React.FC = () => {
 
   return (
     <section
-      className=" md:pt-[6em] pt-[5em] text-primaryLite flex md:flex-row flex-col justify-center items-center md:items-start gap-[4em] pb-[4em] scroll-m-16"
+      className=" md:pt-[6em] pt-[5em] text-primaryLite flex lg:flex-row flex-col justify-center items-center lg:items-start gap-[4em] pb-[4em] scroll-m-16"
       id="features"
     >
       {/* Why choose Linkly */}
@@ -62,7 +62,7 @@ const Features: React.FC = () => {
       </div>
 
       {/* Reasons  */}
-      <div className="grid  lg:grid-cols-2 grid-cols-1 gap-[2em]">
+      <div className="grid  md:grid-cols-2 grid-cols-1 gap-[2em]">
         {ReasonsForLinkly.map((reason, index) => {
           return (
             <div

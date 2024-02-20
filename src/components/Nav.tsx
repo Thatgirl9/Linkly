@@ -38,14 +38,14 @@ const NavBar: React.FC = () => {
         {/* Links */}
 
         <div
-          className={`links h-0 overflow-hidden transition-all md:h-auto bg-primaryGrey md:bg-transparent absolute top-[4em] right-0 md:relative md:top-0 md:right-0 md:border-none  md:rounded-none ease-in-out z-50 nav__div 
+          className={`links h-0 overflow-hidden transition-all md:h-auto bg-primaryGrey md:bg-transparent absolute top-[4em] right-0 md:relative md:top-0 md:right-0 md:border-none  md:rounded-none ease-in-out z-50 nav__div flex flex-col md:flex-row md:gap-6  px-5 py-8  md:mx-0 md:p-0
           ${
             open
               ? "h-[100vh] md:w-fit w-[60%] right-0"
               : "h-0 w-0 md:w-fit right-[-10em] "
           }`}
         >
-          <ul className="flex md:flex-row md:gap-6 text-white font-inter font-normal gap-[1.4em] justify-end md:justify-normal md:items-center items-end flex-col  px-5 py-8  md:mx-0 md:p-0  md:border-none list-none">
+          <ul className="flex md:flex-row md:gap-6 text-white font-inter font-normal gap-[1.4em] justify-end md:justify-normal md:items-center items-end flex-col  md:border-none list-none pb-[1em] md:pb-0">
             {Links.map((link) => (
               <li key={link.name}>
                 <a
@@ -61,17 +61,23 @@ const NavBar: React.FC = () => {
                 </a>
               </li>
             ))}
+          </ul>
 
-            <button className="rounded-3xl  bg-primaryGrey login-btn shadow-sm hover:text-primaryLite">
+          <div className="flex md:flex-row flex-col gap-[1.2em] md:gap-4 justify-end items-end md:justify-normal md:items-center">
+            <button className="rounded-3xl  bg-primaryGrey login-btn shadow-sm hover:text-primaryLite w-[6em]">
               <Link
                 to="/login"
                 className="flex gap-[0.4em] items-center justify-center  py-2 px-3 text-white font-semibold transition-all ease-in-out no-underline text-sm hover:text-primaryLite"
               >
                 <span>Login</span>
-                <img src={SignIn} className="w-[1.4em] h-[1em]" />
+                <img
+                  src={SignIn}
+                  className="w-[1.4em] h-[1em]"
+                  alt="Arrow Icon"
+                />
               </Link>
             </button>
-            <button className="bg-primaryBlue py-2 px-5 rounded-3xl border-transparent hover:text-primaryLite hover:cursor-pointer">
+            <button className="bg-primaryBlue py-2 px-5 rounded-3xl border-transparent hover:text-primaryLite hover:cursor-pointer w-[8.7em]">
               <Link
                 to="/register"
                 className="text-white font-semibold transition-all ease-in-out no-underline text-sm hover:text-primaryLite"
@@ -79,7 +85,8 @@ const NavBar: React.FC = () => {
                 Register Now
               </Link>
             </button>
-          </ul>
+          </div>
+          {/* </ul> */}
         </div>
       </nav>
     </header>
