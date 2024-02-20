@@ -1,4 +1,5 @@
 import Features from "../../components/Features";
+import Pricing from "../../components/Pricing";
 import NavBar from "../../components/Nav";
 import ToggleSwitch from "../../components/ToggleSwitch";
 import "./landing.css";
@@ -108,6 +109,7 @@ const LandingPage: React.FC = () => {
       </div>
 
       <Features />
+      <Pricing />
     </section>
   );
 };
