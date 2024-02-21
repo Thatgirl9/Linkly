@@ -82,7 +82,7 @@ const Pricing: React.FC = () => {
 
   return (
     <section
-      className="flex justify-center items-center flex-col pt-[5em] pb-[3em] gap-[4em] scroll-m-11"
+      className="flex justify-center items-center flex-col pt-[5em] pb-[4em] gap-[4em] scroll-m-11"
       id="pricing"
     >
       <div className="text-center w-[90%] md:w-fit">
