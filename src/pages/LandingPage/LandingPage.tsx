@@ -9,6 +9,7 @@ import InputLink from "../../assets/link.png";
 import QuestionCircle from "../../assets/question-circle.png";
 import LaptopTable from "../../assets/Frame 39.png";
 import MobileTable from "../../assets/Frame 39 (1).png";
+import Footer from "../../components/Footer";
 
 const LandingPage: React.FC = () => {
   const handleToggle = (checked: boolean) => {
@@ -110,6 +111,7 @@ const LandingPage: React.FC = () => {
 
       <Features />
       <Pricing />
+      <Footer />
     </section>
   );
 };
