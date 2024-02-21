@@ -50,6 +50,7 @@ const Footer: React.FC = () => {
         </p>
 
         <button
+          ref={animatedElementRef}
           className={`border border-stroke rounded-md px-1 py-1 text-2xl  ${
             isIntersecting ? "animate__bounce" : ""
           }  animate__animated animate__repeat-2 transition-all`}
