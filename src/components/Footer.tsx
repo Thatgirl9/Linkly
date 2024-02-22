@@ -29,7 +29,7 @@ const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="border-t border-stroke px-8 py-[1em] flex md:flex-row flex-col-reverse gap-[0.9em] md:gap-0 justify-between items-center">
+    <footer className="border-t border-stroke px-8 py-[1em] flex md:flex-row flex-col-reverse gap-[0.9em] md:gap-0 justify-between items-center bg-primaryBlack">
       <p className="text-primaryLite text-sm">&copy; 2024 Linkly </p>
 
       <div className="flex justify-center items-center gap-[1em]">

@@ -44,7 +44,7 @@ const Features: React.FC = () => {
 
   return (
     <section
-      className=" md:pt-[6em] pt-[5em] text-primaryLite flex lg:flex-row flex-col justify-center items-center lg:items-start gap-[4em] pb-[4em] scroll-m-16"
+      className=" md:pt-[6em] pt-[5em] text-primaryLite flex lg:flex-row flex-col justify-center items-center lg:items-start gap-[4em] pb-[4em] scroll-m-16 bg-primaryBlack"
       id="features"
     >
       {/* Why choose Linkly */}

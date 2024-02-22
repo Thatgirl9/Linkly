@@ -13,10 +13,9 @@
 }
 
 :root {
-  background-image: url(../src/assets/Group\ 17.png);
-  background-size: 100%;
-  background-repeat: no-repeat;
-  background-color: #0b101b;
+  /* background-image: url(../src/assets/Group\ 17.png); */
+
+  /* background-color: #0b101b; */
   /* background-color: white; */
   color-scheme: light dark;
 
@@ -34,6 +33,13 @@
   width: 100%;
   overflow-x: hidden;
   scroll-behavior: smooth;
+}
+
+.landing-page-div {
+  background-image: url(../src/assets/Group\ 17.png);
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-color: #0b101b;
 }
 
 @media screen and (max-width: 768px) {

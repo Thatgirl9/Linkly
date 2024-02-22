@@ -6,6 +6,7 @@ declare module JSX {
       React.HTMLAttributes<HTMLElement> & {
         name?: string;
         className?: string;
+        defaultChecked?: boolean;
         // animatedElementRef?: string | boolean;
       },
       HTMLElement

@@ -1,0 +1,6 @@
+.linkly-text {
+  background: linear-gradient(to right, #eb568e, #a353aa, #144ee3, #144ee3);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
