@@ -62,7 +62,7 @@ const Features: React.FC = () => {
       </div>
 
       {/* Reasons  */}
-      <div className="grid  md:grid-cols-2 grid-cols-1 gap-[2em]">
+      <div className="grid  md:grid-cols-2  grid-cols-1 gap-[2em]">
         {ReasonsForLinkly.map((reason, index) => {
           return (
             <div

@@ -5,19 +5,23 @@ import "animate.css";
 
 const Footer: React.FC = () => {
   const [isIntersecting, setIsIntersecting] = useState(false);
-  const animatedElementRef = useRef(null);
+  const animatedElementRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          setIsIntersecting(entry.isIntersecting);
-        });
-      },
-      { threshold: 0.2 }
-    );
-    observer.observe(animatedElementRef.current);
-    return () => observer.disconnect();
+    if (animatedElementRef.current) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            setIsIntersecting(entry.isIntersecting);
+          });
+        },
+        { threshold: 0.2 }
+      );
+      observer.observe(animatedElementRef.current);
+      return () => observer.disconnect();
+    } else {
+      console.error("Animated Element is null");
+    }
   }, []);
 
   const handleScrollToTop = () => {
@@ -51,7 +55,7 @@ const Footer: React.FC = () => {
 
         <button
           ref={animatedElementRef}
-          className={`border border-stroke rounded-md px-1 py-1 text-2xl  ${
+          className={`text-xl  ${
             isIntersecting ? "animate__bounce" : ""
           }  animate__animated animate__repeat-2 transition-all`}
           onClick={handleScrollToTop}

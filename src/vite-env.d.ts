@@ -6,7 +6,7 @@ declare module JSX {
       React.HTMLAttributes<HTMLElement> & {
         name?: string;
         className?: string;
-        animatedElementRef?: string | boolean;
+        // animatedElementRef?: string | boolean;
       },
       HTMLElement
     >; // or specify the exact type if available
