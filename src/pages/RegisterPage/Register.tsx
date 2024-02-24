@@ -22,7 +22,7 @@ const RegisterPage: React.FC = () => {
   };
 
   return (
-    <section className="bg-primaryGrey md:h-screen lg:h-fit  flex justify-center items-center scroll-m-20">
+    <section className="bg-primaryGrey md:h-screen lg:h-fit  flex justify-center items-center ">
       <div
         className="form-div mb-[2em] py-5 mt-[3em] rounded-lg flex flex-col gap-[1.6em] justify-center items-center border border-primaryBlue w-[90%] sm:w-[24em] lg:w-[22em]"
         onMouseOver={handleMouseOver}
