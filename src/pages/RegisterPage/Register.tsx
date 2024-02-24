@@ -1,5 +1,5 @@
 import { Link, useLocation } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import PasswordInput from "../../components/PasswordInput";
 
 import Line from "../../assets/LoginPage/Vector 8.svg";
@@ -8,27 +8,80 @@ import AppleLogo from "../../assets/LoginPage/Path.svg";
 import "./register.css";
 
 const RegisterPage: React.FC = () => {
-  // const navigate = useNavigate();
+  // Scroll to top of Register Page
   const { pathname } = useLocation();
-
-  const handleMouseOver = () => {
-    const form = document.querySelector(".form-div");
-    form?.classList.add("shadow-md", "shadow-primaryPink");
-  };
-
-  const handleMouseLeave = () => {
-    const form = document.querySelector(".form-div");
-    form?.classList.remove("shadow-md", "shadow-primaryPink");
-  };
-
-  const passwordCheck = () => {
-    console.log("Checking password");
-  };
+  // Validating Name, Email and Password
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  // For their error messages
+  const [nameError, setNameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
   // Scrolling Solution
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, [pathname]);
+
+  // Shadow when mouse is hovering on the Form
+  const handleMouseOver = () => {
+    const form = document.querySelector(".form-div");
+    form?.classList.add("shadow-md", "shadow-primaryPink");
+  };
+
+  // Remove shadow when mouse leaves the form
+  const handleMouseLeave = () => {
+    const form = document.querySelector(".form-div");
+    form?.classList.remove("shadow-md", "shadow-primaryPink");
+  };
+
+  // Function for Name Validation
+  const handleNameValidation = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newName = e.target.value;
+
+    // Check if the entered names contains a number or special character
+    if (/\d/.test(newName) || /[!@#$%^&*(),.?":{}|<>]/g.test(newName)) {
+      setNameError("Name cannot contain numbers or special characters");
+    } else {
+      setNameError("");
+    }
+
+    // Update the name state
+    setName(newName);
+  };
+
+  // Function for Email Validation
+  const handleEmailValidation = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newEmail = e.target.value;
+
+    // Check if the entered email is valid and does not contain the @ symbol
+    if (!/@/.test(newEmail)) {
+      setEmailError("Email must contain @ symbol");
+    } else {
+      setEmailError("");
+    }
+
+    // Update the email state
+    setEmail(newEmail);
+  };
+
+  // Function for Password Validation
+  const handlePasswordValidation = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newPassword = e.target.value;
+
+    // Check if the entered password is less 6 or more characters, one number, one uppercase & one lower case.
+    if (/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$/g.test(newPassword)) {
+      setPasswordError(
+        "6 or more characters, one number, one uppercase & one lower case."
+      );
+    } else {
+      setPasswordError("");
+    }
+
+    //  Update the password state
+    setPassword(newPassword);
+  };
 
   return (
     <section className="bg-primaryGrey md:h-screen lg:h-fit  flex justify-center items-center ">
@@ -54,12 +107,19 @@ const RegisterPage: React.FC = () => {
             {/* Username */}
             <div>
               <input
+                name="name"
+                id="name"
                 type="text"
+                value={name}
                 placeholder="Username"
                 required
+                onChange={handleNameValidation}
                 pattern="^([a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$) | ([a-zA-Z]+$)"
                 className="py-3 px-4 w-full rounded-lg focus:outline-none bg-primaryBlack border-primaryPink focus:border-b-2 "
               />
+              {nameError && (
+                <p className="text-primaryLite text-sm mt-1">{nameError}</p>
+              )}
             </div>
 
             {/* Email*/}
@@ -76,14 +136,14 @@ const RegisterPage: React.FC = () => {
             {/* Password */}
             <div>
               <PasswordInput
-                onPasswordChange={passwordCheck}
+                onPasswordChange={handlePasswordValidation}
                 placeholder="Password"
               />
             </div>
 
             <div>
               <PasswordInput
-                onPasswordChange={passwordCheck}
+                onPasswordChange={handlePasswordValidation}
                 placeholder="Confirm password"
               />
             </div>
