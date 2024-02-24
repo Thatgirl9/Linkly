@@ -150,6 +150,13 @@ const RegisterPage: React.FC = () => {
             </button>
           </div>
         </div>
+
+        <div className="text-center w-[90%] text-primaryLite">
+          <p className="text-xs">
+            By signing up, you agree to Linkly's Terms of Service, Privacy
+            Policy and Acceptable Use Policy.
+          </p>
+        </div>
       </div>
     </section>
   );
