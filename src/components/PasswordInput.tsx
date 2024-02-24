@@ -2,8 +2,9 @@ import { useState } from "react";
 
 const PasswordInput: React.FC<{
   onPasswordChange: (password: string) => void;
+  placeholder: string;
   // style: CSSProperties;
-}> = ({ onPasswordChange }) => {
+}> = ({ onPasswordChange, placeholder }) => {
   // PasswordInput.propTypes = {
   //   onPasswordChange: PropTypes.func.isRequired,
   // };
@@ -28,7 +29,7 @@ const PasswordInput: React.FC<{
         value={password}
         onChange={handlePasswordChange}
         // style={style}
-        placeholder="Password"
+        placeholder={placeholder}
         className="w-full py-3 px-4 rounded-lg focus:outline-none bg-primaryBlack border-primaryPink focus:border-b-2 "
       />
       <button

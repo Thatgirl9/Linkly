@@ -52,7 +52,10 @@ const LoginPage: React.FC = () => {
 
             {/* Password */}
             <div>
-              <PasswordInput onPasswordChange={passwordCheck} />
+              <PasswordInput
+                onPasswordChange={passwordCheck}
+                placeholder="Password"
+              />
             </div>
 
             <div className="flex justify-end items-end">
@@ -93,7 +96,7 @@ const LoginPage: React.FC = () => {
           </div>
 
           <div className="flex items-center justify-center gap-3 pt-[1em]">
-            <button className="flex items-center justify-center gap-2 border border-primaryBlue bg-primaryBlack p-1 rounded-md ">
+            <button className="flex items-center justify-center gap-2 border border-primaryBlue bg-primaryBlack p-1 px-2 rounded-md ">
               <span>
                 <img
                   src={GoogleIcon}
@@ -104,7 +107,7 @@ const LoginPage: React.FC = () => {
               </span>
               Google
             </button>
-            <button className="flex items-center justify-center gap-2 border border-primaryBlue bg-primaryBlack p-1 rounded-md ">
+            <button className="flex items-center justify-center gap-2 border border-primaryBlue bg-primaryBlack p-1 px-2 rounded-md ">
               <span>
                 <img
                   src={AppleLogo}
@@ -117,8 +120,6 @@ const LoginPage: React.FC = () => {
             </button>
           </div>
         </div>
-        {/* </div> */}
-        {/* </div> */}
       </div>
     </section>
   );
