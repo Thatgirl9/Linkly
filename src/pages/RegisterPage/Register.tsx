@@ -1,4 +1,5 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 import PasswordInput from "../../components/PasswordInput";
 
 import Line from "../../assets/LoginPage/Vector 8.svg";
@@ -7,6 +8,9 @@ import AppleLogo from "../../assets/LoginPage/Path.svg";
 import "./register.css";
 
 const RegisterPage: React.FC = () => {
+  // const navigate = useNavigate();
+  const { pathname } = useLocation();
+
   const handleMouseOver = () => {
     const form = document.querySelector(".form-div");
     form?.classList.add("shadow-md", "shadow-primaryPink");
@@ -20,6 +24,11 @@ const RegisterPage: React.FC = () => {
   const passwordCheck = () => {
     console.log("Checking password");
   };
+
+  // Scrolling Solution
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+  }, [pathname]);
 
   return (
     <section className="bg-primaryGrey md:h-screen lg:h-fit  flex justify-center items-center ">
