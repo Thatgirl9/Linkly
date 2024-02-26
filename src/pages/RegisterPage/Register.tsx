@@ -14,10 +14,12 @@ const RegisterPage: React.FC = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
   // For their error messages
   const [nameError, setNameError] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [passwordConfirmError, setPasswordConfirmError] = useState("");
 
   // Scrolling Solution
   useEffect(() => {
@@ -81,8 +83,22 @@ const RegisterPage: React.FC = () => {
     setPassword(newPassword);
   };
 
+  // Function for password confirmation
+  const handlePasswordConfirmation = (newPassword: string) => {
+    console.log("Checking password");
+    if (newPassword === password) {
+      setPasswordConfirmError("Password Matches ✔");
+      // console.log("Password matches ");
+    } else {
+      setPasswordConfirmError("Password does not match ❌");
+      // console.log("Password does not match ");
+    }
+    // Update the Confirm password state
+    setPasswordConfirm(newPassword);
+  };
+
   return (
-    <section className="bg-primaryGrey md:h-screen lg:h-fit  flex justify-center items-center ">
+    <section className="bg-primaryGrey sm:h-screen lg:h-fit  flex justify-center items-center ">
       <div
         className="form-div mb-[2em] py-5 mt-[3em] rounded-lg flex flex-col gap-[1.6em] justify-center items-center border border-primaryBlue w-[90%] sm:w-[24em] lg:w-[22em]"
         onMouseOver={handleMouseOver}
@@ -151,9 +167,14 @@ const RegisterPage: React.FC = () => {
 
             <div>
               <PasswordInput
-                onChange={handlePasswordValidation}
+                onChange={handlePasswordConfirmation}
                 placeholder="Confirm password"
               />
+              {passwordConfirmError && (
+                <p className="text-primaryLite text-sm mt-1">
+                  {passwordConfirmError}
+                </p>
+              )}
             </div>
 
             <div className="flex justify-end items-end">
