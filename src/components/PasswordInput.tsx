@@ -1,10 +1,10 @@
 import { useState } from "react";
 
 const PasswordInput: React.FC<{
-  onPasswordChange: (password: string) => void;
+  onChange: (password: string) => void;
   placeholder: string;
   // style: CSSProperties;
-}> = ({ onPasswordChange, placeholder }) => {
+}> = ({ onChange, placeholder }) => {
   // PasswordInput.propTypes = {
   //   onPasswordChange: PropTypes.func.isRequired,
   // };
@@ -16,10 +16,10 @@ const PasswordInput: React.FC<{
     setShowPassword(!showPassword);
   };
 
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newPassword = e.target.value;
     setPassword(newPassword);
-    onPasswordChange(newPassword);
+    onChange(newPassword);
   };
 
   return (
@@ -27,7 +27,7 @@ const PasswordInput: React.FC<{
       <input
         type={showPassword ? "text" : "password"}
         value={password}
-        onChange={handlePasswordChange}
+        onChange={handleInputChange}
         // style={style}
         placeholder={placeholder}
         className="w-full py-3 px-4 rounded-lg focus:outline-none bg-primaryBlack border-primaryPink focus:border-b-2 "

@@ -67,16 +67,14 @@ const RegisterPage: React.FC = () => {
   };
 
   // Function for Password Validation
-  const handlePasswordValidation = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newPassword = e.target.value;
-
+  const handlePasswordValidation = (newPassword: string) => {
     // Check if the entered password is less 6 or more characters, one number, one uppercase & one lower case.
-    if (/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}$/g.test(newPassword)) {
+    if (/^(?=.*\d)(?=.*[a-zA-Z]).{6,}$/g.test(newPassword)) {
+      setPasswordError("");
+    } else {
       setPasswordError(
         "6 or more characters, one number, one uppercase & one lower case."
       );
-    } else {
-      setPasswordError("");
     }
 
     //  Update the password state
@@ -114,7 +112,7 @@ const RegisterPage: React.FC = () => {
                 placeholder="Username"
                 required
                 onChange={handleNameValidation}
-                pattern="^([a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$) | ([a-zA-Z]+$)"
+                // pattern="^([a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$) | ([a-zA-Z]+$)"
                 className="py-3 px-4 w-full rounded-lg focus:outline-none bg-primaryBlack border-primaryPink focus:border-b-2 "
               />
               {nameError && (
@@ -125,25 +123,35 @@ const RegisterPage: React.FC = () => {
             {/* Email*/}
             <div>
               <input
-                type="text"
+                name="email"
+                id="email"
+                type="email"
+                value={email}
                 placeholder="Email address"
                 required
-                pattern="^([a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$) | ([a-zA-Z]+$)"
+                onChange={handleEmailValidation}
+                // pattern="^([a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$) | ([a-zA-Z]+$)"
                 className="py-3 px-4 w-full rounded-lg focus:outline-none bg-primaryBlack border-primaryPink focus:border-b-2 "
               />
+              {emailError && (
+                <p className="text-primaryLite text-sm mt-1">{emailError}</p>
+              )}
             </div>
 
             {/* Password */}
             <div>
               <PasswordInput
-                onPasswordChange={handlePasswordValidation}
+                onChange={handlePasswordValidation}
                 placeholder="Password"
               />
+              {passwordError && (
+                <p className="text-primaryLite text-sm mt-1">{passwordError}</p>
+              )}
             </div>
 
             <div>
               <PasswordInput
-                onPasswordChange={handlePasswordValidation}
+                onChange={handlePasswordValidation}
                 placeholder="Confirm password"
               />
             </div>
@@ -160,7 +168,7 @@ const RegisterPage: React.FC = () => {
 
             <div>
               <p className="text-center text-primaryLite text-sm flex gap-1 justify-center items-center">
-                <span>Have an account?</span>
+                <span> Already have an account?</span>
                 <Link
                   to="/login"
                   className="text-primaryBlue font-medium hover:underline"
