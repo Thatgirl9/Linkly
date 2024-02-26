@@ -26,11 +26,11 @@ const NavBar: React.FC = () => {
           {/* Hamburger */}
           <button
             onClick={() => setOpen(!open)}
-            className="w-6 h-6 text-4xl text-textPrimary md:hidden bg-transparent border-none"
+            className="w-6 h-6 text-4xl text-white md:hidden bg-transparent border-none"
           >
             <ion-icon
               name={open ? "close" : "menu"}
-              className="text-textPrimary"
+              className="text-white"
             ></ion-icon>
           </button>
         </div>

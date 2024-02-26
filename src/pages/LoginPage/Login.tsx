@@ -17,8 +17,9 @@ const LoginPage: React.FC = () => {
     form?.classList.remove("shadow-md", "shadow-primaryPink");
   };
 
-  const passwordCheck = () => {
-    console.log("Checking password");
+  const passwordCheck = (newPassword: string) => {
+    const value = newPassword;
+    console.log(value, "Checking password");
   };
 
   return (
@@ -52,10 +53,7 @@ const LoginPage: React.FC = () => {
 
             {/* Password */}
             <div>
-              <PasswordInput
-                onPasswordChange={passwordCheck}
-                placeholder="Password"
-              />
+              <PasswordInput onChange={passwordCheck} placeholder="Password" />
             </div>
 
             <div className="flex justify-end items-end">
