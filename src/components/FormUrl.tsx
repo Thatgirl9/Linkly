@@ -10,7 +10,7 @@ const Form: React.FC<{ onSubmit: (url: string) => void }> = ({ onSubmit }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="flex justify-center items-center">
       <div className="sm:w-[30em] w-[90%]  rounded-full flex items-center justify-center gap-2 bg-primaryGrey px-[0.3em] h-[3.3em] border-[3px] border-stroke">
         <img
           src={InputLink}

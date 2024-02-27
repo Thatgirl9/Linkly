@@ -3,40 +3,70 @@ import Pricing from "../../components/Pricing";
 import NavBar from "../../components/Nav";
 import ToggleSwitch from "../../components/ToggleSwitch";
 import Form from "../../components/FormUrl";
+import ShortLink from "../../components/ShortenedLink";
+import Footer from "../../components/Footer";
 import "./landing.css";
+import { useState } from "react";
 import { Link } from "react-router-dom";
-// import axios from "axios";
+import axios from "axios";
 // import QRCode from "qrcode.react";
 
 // import InputLink from "../../assets/link.png";
 import QuestionCircle from "../../assets/question-circle.png";
 import LaptopTable from "../../assets/Frame 39.png";
 import MobileTable from "../../assets/Frame 39 (1).png";
-import Footer from "../../components/Footer";
-
-// import { useState } from "react";
 
 const LandingPage: React.FC = () => {
   // const [url, setUrl] = useState("");
-  // const [shortUrl, setShortUrl] = useState("");
-  // const [qrCode, setQrCode] = useState("");
+  const [shortUrl, setShortUrl] = useState("");
+  const [qrCode, setQrCode] = useState("");
+  const [copy, setCopy] = useState(false);
 
-  const handleToggle = (checked: boolean) => {
-    console.log("Checked: ", checked);
+  const handleFormSubmit = async (longUrl: string) => {
+    // Call the API to do it's magic (shorten the URL)
+    try {
+      const response = await axios.post("/api/shorten", {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ longUrl }),
+      });
+      if (response) {
+        // const data = await response.json();
+        setShortUrl(response.data.shortUrl);
+        setQrCode(response.data.qrCode);
+      } else {
+        console.error("Error: ", response);
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
 
-  // const handleSubmit = async (e: React.FormEvent) => {
-  //   e.preventDefault();
-  //   console.log("Submit: ", e);
+  const copyToClipboard = (copied: boolean) => {
+    navigator.clipboard.writeText(shortUrl);
+    console.log("copied 1", copied);
 
-  //   try {
-  //     const response = await axios.post("/api/shorten", {});
-  //     setShortUrl(response.data.shortUrl);
-  //     setQrCode(response.data.qrCode);
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // };
+    console.log("copied 2", copy);
+    // if (copied) {
+    //   const url = shortUrl;
+    //   navigator.clipboard.writeText(url);
+    //   setCopy(true);
+    // } else {
+    //   setCopy(false);
+    // }
+  };
+
+  const handleToggle = (checked: boolean) => {
+    if (checked) {
+      const url = shortUrl;
+      navigator.clipboard.writeText(url);
+      setCopy(true);
+    } else {
+      setCopy(false);
+    }
+    console.log("Checked: 1", checked);
+  };
 
   return (
     <section className="landingPage font-inter">
@@ -58,35 +88,16 @@ const LandingPage: React.FC = () => {
         {/* Link Input, Toggle Switch and so.... */}
         <div className="flex flex-col gap-[1.9em] lg:gap-[1.5em] justify-center items-center">
           {/* Link Input */}
-          {/* <form onSubmit={handleSubmit}>
-            <div className="sm:w-[30em] w-[90%]  rounded-full flex items-center justify-center gap-2 bg-primaryGrey px-[0.3em] h-[3.3em] border-[3px] border-stroke">
-              <img
-                src={InputLink}
-                alt="Link Icon"
-                className="h-[1.2em] w-[2em] pl-[0.5em]"
-              />
-              <input
-                className="bg-transparent outline-none sm:w-[28em] w-[70%]"
-                placeholder="Enter the link here"
-                id="url"
-                type="text"
-                value={url}
-                onChange={(e) => setUrl(e.target.value)}
-              ></input>
-              <button
-                className="bg-primaryBlue text-white font-semibold px-4 py-2 rounded-full shadow-2xl shadow-primaryBlue"
-                type="submit"
-              >
-                Shorten!
-              </button>
-            </div>
-          </form> */}
-          <Form />
+
+          <Form onSubmit={handleFormSubmit} />
+          {shortUrl && <ShortLink url={shortUrl} qrCode={qrCode} />}
 
           {/* Toggle switch and Texts */}
           <div className="flex flex-col justify-center items-center text-primaryLite gap-[1.3em]">
+            {copy && <span>Copied!</span>}
             <div className="flex gap-4 items-center justify-center">
-              <ToggleSwitch onChange={handleToggle} />
+              <ToggleSwitch onChange={handleToggle} onClick={copyToClipboard} />
+
               <p className="text-base">Auto Paste from Clipboard </p>
             </div>
             <p className="text-sm flex justify-center items-center text-center gap-2 text-primaryLite">

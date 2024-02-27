@@ -3,10 +3,12 @@ import { useState } from "react";
 // Properties that the toggleSwitch component can receive
 interface ToggleSwitchProps {
   onChange: (checked: boolean) => void;
+  onClick: (copied: boolean) => void;
 }
 
-const ToggleSwitch: React.FC<ToggleSwitchProps> = ({ onChange }) => {
+const ToggleSwitch: React.FC<ToggleSwitchProps> = ({ onChange, onClick }) => {
   const [checked, setChecked] = useState(false);
+  const [copied, setCopied] = useState(false);
 
   // Function to Handle the toggle action
   const handleToggle = () => {
@@ -15,8 +17,16 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({ onChange }) => {
     // Call the onChange callback with the updated checked state
     onChange(!checked);
   };
+
+  // Function to handle the copy action(Copy to clipboard)
+  const handleCopy = () => {
+    // Update the component state and toggle the copied state.
+    setCopied(!copied);
+    // Call the onClick callback with the updated copied state
+    onClick(!copied);
+  };
   return (
-    <div className="flex items-center space-x-2">
+    <button className="flex items-center space-x-2" onClick={handleCopy}>
       {/* Label and Input elements for the switch */}
       <label className="cursor-pointer">
         {/* Hidden checkbox input that is controlled by the component's state */}
@@ -38,7 +48,7 @@ const ToggleSwitch: React.FC<ToggleSwitchProps> = ({ onChange }) => {
           ></div>
         </div>
       </label>
-    </div>
+    </button>
   );
 };
 
