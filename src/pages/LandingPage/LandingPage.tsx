@@ -2,40 +2,41 @@ import Features from "../../components/Features";
 import Pricing from "../../components/Pricing";
 import NavBar from "../../components/Nav";
 import ToggleSwitch from "../../components/ToggleSwitch";
+import Form from "../../components/FormUrl";
 import "./landing.css";
 import { Link } from "react-router-dom";
-import axios from "axios";
+// import axios from "axios";
 // import QRCode from "qrcode.react";
 
-import InputLink from "../../assets/link.png";
+// import InputLink from "../../assets/link.png";
 import QuestionCircle from "../../assets/question-circle.png";
 import LaptopTable from "../../assets/Frame 39.png";
 import MobileTable from "../../assets/Frame 39 (1).png";
 import Footer from "../../components/Footer";
-import { useState } from "react";
+
+// import { useState } from "react";
 
 const LandingPage: React.FC = () => {
-  const [url, setUrl] = useState("");
-  const [shortUrl, setShortUrl] = useState("");
-  const [qrCode, setQrCode] = useState("");
+  // const [url, setUrl] = useState("");
+  // const [shortUrl, setShortUrl] = useState("");
+  // const [qrCode, setQrCode] = useState("");
 
   const handleToggle = (checked: boolean) => {
     console.log("Checked: ", checked);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   console.log("Submit: ", e);
 
-    try {
-      const response = await axios.post("/api/shorten", {
-        url,
-      });
-      setShortUrl(response.data.shortUrl);
-      setQrCode(response.data.qrCode);
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  //   try {
+  //     const response = await axios.post("/api/shorten", {});
+  //     setShortUrl(response.data.shortUrl);
+  //     setQrCode(response.data.qrCode);
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // };
 
   return (
     <section className="landingPage font-inter">
@@ -57,7 +58,7 @@ const LandingPage: React.FC = () => {
         {/* Link Input, Toggle Switch and so.... */}
         <div className="flex flex-col gap-[1.9em] lg:gap-[1.5em] justify-center items-center">
           {/* Link Input */}
-          <form onSubmit={handleSubmit}>
+          {/* <form onSubmit={handleSubmit}>
             <div className="sm:w-[30em] w-[90%]  rounded-full flex items-center justify-center gap-2 bg-primaryGrey px-[0.3em] h-[3.3em] border-[3px] border-stroke">
               <img
                 src={InputLink}
@@ -79,7 +80,8 @@ const LandingPage: React.FC = () => {
                 Shorten!
               </button>
             </div>
-          </form>
+          </form> */}
+          <Form />
 
           {/* Toggle switch and Texts */}
           <div className="flex flex-col justify-center items-center text-primaryLite gap-[1.3em]">
