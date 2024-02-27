@@ -4,16 +4,37 @@ import NavBar from "../../components/Nav";
 import ToggleSwitch from "../../components/ToggleSwitch";
 import "./landing.css";
 import { Link } from "react-router-dom";
+import axios from "axios";
+// import QRCode from "qrcode.react";
 
 import InputLink from "../../assets/link.png";
 import QuestionCircle from "../../assets/question-circle.png";
 import LaptopTable from "../../assets/Frame 39.png";
 import MobileTable from "../../assets/Frame 39 (1).png";
 import Footer from "../../components/Footer";
+import { useState } from "react";
 
 const LandingPage: React.FC = () => {
+  const [url, setUrl] = useState("");
+  const [shortUrl, setShortUrl] = useState("");
+  const [qrCode, setQrCode] = useState("");
+
   const handleToggle = (checked: boolean) => {
     console.log("Checked: ", checked);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post("/api/shorten", {
+        url,
+      });
+      setShortUrl(response.data.shortUrl);
+      setQrCode(response.data.qrCode);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -36,20 +57,29 @@ const LandingPage: React.FC = () => {
         {/* Link Input, Toggle Switch and so.... */}
         <div className="flex flex-col gap-[1.9em] lg:gap-[1.5em] justify-center items-center">
           {/* Link Input */}
-          <div className="sm:w-[30em] w-[90%]  rounded-full flex items-center justify-center gap-2 bg-primaryGrey px-[0.3em] h-[3.3em] border-[3px] border-stroke">
-            <img
-              src={InputLink}
-              alt="Link Icon"
-              className="h-[1.2em] w-[2em] pl-[0.5em]"
-            />
-            <input
-              className="bg-transparent outline-none sm:w-[28em] w-[70%]"
-              placeholder="Enter the link here"
-            ></input>
-            <button className="bg-primaryBlue text-white font-semibold px-4 py-2 rounded-full shadow-2xl shadow-primaryBlue">
-              Shorten!
-            </button>
-          </div>
+          <form onSubmit={handleSubmit}>
+            <div className="sm:w-[30em] w-[90%]  rounded-full flex items-center justify-center gap-2 bg-primaryGrey px-[0.3em] h-[3.3em] border-[3px] border-stroke">
+              <img
+                src={InputLink}
+                alt="Link Icon"
+                className="h-[1.2em] w-[2em] pl-[0.5em]"
+              />
+              <input
+                className="bg-transparent outline-none sm:w-[28em] w-[70%]"
+                placeholder="Enter the link here"
+                id="url"
+                type="text"
+                value={url}
+                onChange={(e) => setUrl(e.target.value)}
+              ></input>
+              <button
+                className="bg-primaryBlue text-white font-semibold px-4 py-2 rounded-full shadow-2xl shadow-primaryBlue"
+                type="submit"
+              >
+                Shorten!
+              </button>
+            </div>
+          </form>
 
           {/* Toggle switch and Texts */}
           <div className="flex flex-col justify-center items-center text-primaryLite gap-[1.3em]">
