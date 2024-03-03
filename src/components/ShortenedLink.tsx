@@ -6,8 +6,10 @@ import React from "react";
 const ShortLink: React.FC<{
   url: string;
   qrCode: string;
-}> = ({ url, qrCode }) => {
+  // toDataUrl: () => string;
+}> = ({ url }) => {
   const [copied, setCopied] = useState(false);
+  // const [qrCode, setQrCode] = useState("");
 
   const copyToClipboard = (copied: boolean) => {
     navigator.clipboard.writeText(url);
@@ -22,24 +24,25 @@ const ShortLink: React.FC<{
     }
   };
 
-  const generateQrCode = () => {
-    QRCode.toDataUrl(
-      url,
-      {
-        width: "6rem",
-        height: "6rem",
-        margin: 2,
-        color: {
-          dark: "black",
-          light: "#EEEEEEFF",
-        },
-      },
-      (err, url) => {
-        if (err) return console.error(err);
-        console.log(url);
-      }
-    );
-  };
+  // const generateQrCode: React.FC<{
+  //   toDataUrl: () => string;
+  // }> = async ({ toDataUrl }) => {
+  //   try {
+  //     const urlCode = { url };
+  //     const dataUrl = await QRCode.toDataUrl(url, {
+  //       width: 96,
+  //       height: 96,
+  //       margin: 2,
+  //       color: {
+  //         dark: "#000000FF",
+  //         light: "#EEEEEEFF",
+  //       },
+  //     });
+  //     setQrCode(dataUrl);
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   return (
     <div className="flex flex-col justify-center items-center">
@@ -55,7 +58,17 @@ const ShortLink: React.FC<{
         <p className="text-base">Auto Paste from Clipboard </p>
       </div>
       <div className="flex items-center justify-center mt-8">
-        <QRCode value={qrCode} className="w-24 h-24 mr-4 bg-white"></QRCode>
+        <button onClick={generateQrCode}>Generate</button>
+
+        {qrCode && (
+          <div>
+            <img src={qrCode} />
+            <button href={qrCode} download="qrcode.png">
+              Download QR Code
+            </button>
+          </div>
+        )}
+        {/* <QRCode value={qrCode} className="w-24 h-24 mr-4 bg-white"></QRCode> */}
         {/* <QRCode
           value="<https://podcast-page-thatgirl9-987724.netlify.app/>"
           // ref={qrCodeRef}
@@ -63,9 +76,7 @@ const ShortLink: React.FC<{
         <button
           onClick={() => window.open(qrCode, "_blank")}
           className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-        >
-          Download QR Code
-        </button>
+        ></button>
         {/* <button onClick={downloadQRCode}>Download QR Code</button> */}
       </div>
     </div>

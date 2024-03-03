@@ -117,7 +117,7 @@ const LandingPage: React.FC = () => {
           {/* Link Input */}
 
           <Form onSubmit={handleFormSubmit} />
-          {shortUrl && <ShortLink url={shortUrl} qrCode={shortUrl} />}
+          {shortUrl && <ShortLink url={shortUrl} qrCode={qrCode} />}
 
           {/* Toggle switch and Texts */}
           <div className="flex flex-col justify-center items-center text-primaryLite gap-[1.3em]">
