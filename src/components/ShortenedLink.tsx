@@ -2,6 +2,7 @@ import { useState } from "react";
 import ToggleSwitch from "./ToggleSwitch";
 import QRCode from "qrcode.react";
 import React from "react";
+
 const ShortLink: React.FC<{
   url: string;
   qrCode: string;
@@ -19,7 +20,25 @@ const ShortLink: React.FC<{
     } else {
       setCopied(false);
     }
-    console.log("Checked: 1", checked);
+  };
+
+  const generateQrCode = () => {
+    QRCode.toDataUrl(
+      url,
+      {
+        width: "6rem",
+        height: "6rem",
+        margin: 2,
+        color: {
+          dark: "black",
+          light: "#EEEEEEFF",
+        },
+      },
+      (err, url) => {
+        if (err) return console.error(err);
+        console.log(url);
+      }
+    );
   };
 
   return (
