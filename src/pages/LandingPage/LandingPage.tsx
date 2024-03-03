@@ -1,7 +1,7 @@
 import Features from "../../components/Features";
 import Pricing from "../../components/Pricing";
 import NavBar from "../../components/Nav";
-import ToggleSwitch from "../../components/ToggleSwitch";
+// import ToggleSwitch from "../../components/ToggleSwitch";
 import Form from "../../components/FormUrl";
 import ShortLink from "../../components/ShortenedLink";
 import Footer from "../../components/Footer";
@@ -22,9 +22,9 @@ const LandingPage: React.FC = () => {
   // const [url, setUrl] = useState("");
   const [shortUrl, setShortUrl] = useState("");
   const [qrCode, setQrCode] = useState("");
-  const [copy, setCopy] = useState(false);
+  // const [copy, setCopy] = useState(false);
 
-  console.log(import.meta.env);
+  // console.log(import.meta.env);
 
   // const handleFormSubmit = async (longUrl: string) => {
   //   // Call the API to do it's magic (shorten the URL)
@@ -80,40 +80,19 @@ const LandingPage: React.FC = () => {
       if (response.ok) {
         const data = await response.json();
         console.log(data);
-        console.log(data.data.tiny_url);
-        setShortUrl(data.data.tiny_url.shortUrl);
-        setQrCode(data.qrCode);
+        const result = data.data.tiny_url;
+        console.log(result);
+        setShortUrl(result);
+        // setShortUrl(data.data.tiny_url.shortUrl);
+        const qrCode = data.data.tiny_url;
+        console.log(qrCode);
+        setQrCode(qrCode);
       } else {
         console.error("Error", response.statusText);
       }
     } catch (err) {
       console.error(err);
     }
-  };
-
-  const copyToClipboard = (copied: boolean) => {
-    navigator.clipboard.writeText(shortUrl);
-    console.log("copied 1", copied);
-
-    console.log("copied 2", copy);
-    // if (copied) {
-    //   const url = shortUrl;
-    //   navigator.clipboard.writeText(url);
-    //   setCopy(true);
-    // } else {
-    //   setCopy(false);
-    // }
-  };
-
-  const handleToggle = (checked: boolean) => {
-    if (checked) {
-      const url = shortUrl;
-      navigator.clipboard.writeText(url);
-      setCopy(true);
-    } else {
-      setCopy(false);
-    }
-    console.log("Checked: 1", checked);
   };
 
   return (
@@ -138,16 +117,15 @@ const LandingPage: React.FC = () => {
           {/* Link Input */}
 
           <Form onSubmit={handleFormSubmit} />
-          {shortUrl && <ShortLink url={shortUrl} qrCode={qrCode} />}
+          {shortUrl && <ShortLink url={shortUrl} qrCode={shortUrl} />}
 
           {/* Toggle switch and Texts */}
           <div className="flex flex-col justify-center items-center text-primaryLite gap-[1.3em]">
-            {copy && <span>Copied!</span>}
-            <div className="flex gap-4 items-center justify-center">
+            {/* <div className="flex gap-4 items-center justify-center">
               <ToggleSwitch onChange={handleToggle} onClick={copyToClipboard} />
 
               <p className="text-base">Auto Paste from Clipboard </p>
-            </div>
+            </div> */}
             <p className="text-sm flex justify-center items-center text-center gap-2 text-primaryLite">
               <span>
                 You can create{" "}
