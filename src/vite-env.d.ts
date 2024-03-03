@@ -12,4 +12,7 @@ declare module JSX {
       HTMLElement
     >; // or specify the exact type if available
   }
+  interface Window {
+    REACT_APP_BITLY_TOKEN?: string;
+  }
 }

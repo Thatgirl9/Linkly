@@ -20,6 +20,7 @@ const Form: React.FC<{ onSubmit: (url: string) => void }> = ({ onSubmit }) => {
         <input
           className="bg-transparent outline-none sm:w-[28em] w-[70%]"
           placeholder="Enter the link here"
+          required
           id="url"
           type="text"
           value={url}
