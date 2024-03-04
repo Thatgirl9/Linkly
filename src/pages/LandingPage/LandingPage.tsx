@@ -17,11 +17,13 @@ import { Link } from "react-router-dom";
 import QuestionCircle from "../../assets/question-circle.png";
 import LaptopTable from "../../assets/Frame 39.png";
 import MobileTable from "../../assets/Frame 39 (1).png";
+import Spinner from "../../components/Spinner";
 
 const LandingPage: React.FC = () => {
   // const [url, setUrl] = useState("");
   const [shortUrl, setShortUrl] = useState("");
   const [qrCode, setQrCode] = useState("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   // const [copy, setCopy] = useState(false);
 
   // console.log(import.meta.env);
@@ -56,6 +58,7 @@ const LandingPage: React.FC = () => {
   // };
 
   const handleFormSubmit = async (longUrl: string) => {
+    setIsLoading(true);
     try {
       // const apiToken = (window as any).REACT_APP_BITLY_TOKEN;
       // const groupGuid = "Ba1bc23dE4F";
@@ -92,6 +95,8 @@ const LandingPage: React.FC = () => {
       }
     } catch (err) {
       console.error(err);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -117,11 +122,8 @@ const LandingPage: React.FC = () => {
           {/* Link Input */}
 
           <Form onSubmit={handleFormSubmit} />
-          {shortUrl ? (
-            <ShortLink url={shortUrl} qrCode={qrCode} />
-          ) : (
-            <Spinner />
-          )}
+          <Spinner isLoading={isLoading} />
+
           {shortUrl && <ShortLink url={shortUrl} qrCode={qrCode} />}
 
           {/* Toggle switch and Texts */}
