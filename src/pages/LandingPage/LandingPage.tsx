@@ -117,6 +117,11 @@ const LandingPage: React.FC = () => {
           {/* Link Input */}
 
           <Form onSubmit={handleFormSubmit} />
+          {shortUrl ? (
+            <ShortLink url={shortUrl} qrCode={qrCode} />
+          ) : (
+            <Spinner />
+          )}
           {shortUrl && <ShortLink url={shortUrl} qrCode={qrCode} />}
 
           {/* Toggle switch and Texts */}
