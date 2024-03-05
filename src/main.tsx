@@ -24,6 +24,18 @@ const router = createBrowserRouter([
     path: "/register",
     element: <RegisterPage />,
   },
+  {
+    path: "/dashboard",
+    element: <div>Dashboard</div>,
+  },
+  // {
+  //   path: "/404",
+  //   element: <div>404</div>,
+  // },
+  // {
+  //   path: "*",
+  //   element: <div>Not Found</div>,
+  // },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

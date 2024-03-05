@@ -16,3 +16,11 @@ declare module JSX {
     REACT_APP_BITLY_TOKEN?: string;
   }
 }
+
+declare module "*.js" {
+  const value: string;
+  const auth: any;
+  const googleProvider: any;
+  export default value;
+  export { auth, googleProvider };
+}
