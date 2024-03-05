@@ -1,4 +1,4 @@
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import PasswordInput from "../../components/PasswordInput";
 // import { auth, googleProvider } from "../../config/";
 import { auth, googleProvider } from "../../config/firebase.js";
@@ -48,7 +48,7 @@ const LoginPage: React.FC = () => {
       const user = userCredential.user;
       setUser(user);
       navigate("/dashboard");
-    } catch (err) {
+    } catch (err: unknown) {
       console.error(err);
       setErrorMessage(err.code);
       // if (err.code === "auth/invalid-credential") {

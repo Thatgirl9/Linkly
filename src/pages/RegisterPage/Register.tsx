@@ -1,6 +1,8 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import PasswordInput from "../../components/PasswordInput";
+import { auth, googleProvider } from "../../config/firebase.js";
+import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 
 import Line from "../../assets/LoginPage/Vector 8.svg";
 import GoogleIcon from "../../assets/LoginPage/logo_googleg_48dp.png";
@@ -10,6 +12,7 @@ import "./register.css";
 const RegisterPage: React.FC = () => {
   // Scroll to top of Register Page
   const { pathname } = useLocation();
+  const navigate = useNavigate();
   // Validating Name, Email and Password
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -18,6 +21,7 @@ const RegisterPage: React.FC = () => {
   // For their error messages
   const [nameError, setNameError] = useState("");
   const [emailError, setEmailError] = useState("");
+  const [passError, setPassError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [passwordConfirmError, setPasswordConfirmError] = useState("");
 
@@ -36,6 +40,28 @@ const RegisterPage: React.FC = () => {
   const handleMouseLeave = () => {
     const form = document.querySelector(".form-div");
     form?.classList.remove("shadow-md", "shadow-primaryPink");
+  };
+
+  const registerAuthentication = async () => {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
+      // if (user) {
+      //   navigate("/login");
+      // }
+      console.log(user, "Signed In");
+    } catch (err: unknown) {
+      if (err.code === "auth/email-already-in-use") {
+        setPassError("Email is already in use");
+      } else {
+        console.error(err.code);
+        console.error(err.message);
+      }
+    }
   };
 
   // Function for Name Validation
@@ -104,7 +130,10 @@ const RegisterPage: React.FC = () => {
         onMouseOver={handleMouseOver}
         onMouseLeave={handleMouseLeave}
       >
-        <form className="flex flex-col gap-[1.6em] w-[90%]">
+        <form
+          className="flex flex-col gap-[1.6em] w-[90%]"
+          onClick={(e) => e.preventDefault()}
+        >
           <div className="text-center">
             <h1 className="text-4xl font-semibold pb-3 ">
               <span className="linkly-text">Welcome</span> 👋
@@ -152,6 +181,9 @@ const RegisterPage: React.FC = () => {
               {emailError && (
                 <p className="text-primaryLite text-sm mt-1">{emailError}</p>
               )}
+              {passError && (
+                <p className="text-red-500 text-sm mt-1">{passError}</p>
+              )}
             </div>
 
             {/* Password */}
@@ -182,7 +214,10 @@ const RegisterPage: React.FC = () => {
             </div>
 
             <div className="mt-5 flex justify-center items-center w-full">
-              <button className="p-2 w-full bg-primaryBlue rounded-lg font-semibold shadow-inner shadow-primaryBlue">
+              <button
+                className="p-2 w-full bg-primaryBlue rounded-lg font-semibold shadow-inner shadow-primaryBlue"
+                onClick={registerAuthentication}
+              >
                 Register
               </button>
             </div>
