@@ -2,12 +2,17 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import PasswordInput from "../../components/PasswordInput";
 import { auth, googleProvider } from "../../config/firebase.js";
-import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  signInWithPopup,
+  sendEmailVerification,
+} from "firebase/auth";
 
 import Line from "../../assets/LoginPage/Vector 8.svg";
 import GoogleIcon from "../../assets/LoginPage/logo_googleg_48dp.png";
 import AppleLogo from "../../assets/LoginPage/Path.svg";
 import "./register.css";
+import Spinner from "../../components/Spinner.js";
 
 const RegisterPage: React.FC = () => {
   // Scroll to top of Register Page
@@ -24,6 +29,7 @@ const RegisterPage: React.FC = () => {
   const [passError, setPassError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [passwordConfirmError, setPasswordConfirmError] = useState("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // Scrolling Solution
   useEffect(() => {
@@ -43,6 +49,7 @@ const RegisterPage: React.FC = () => {
   };
 
   const registerAuthentication = async () => {
+    setIsLoading(true);
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
@@ -50,17 +57,23 @@ const RegisterPage: React.FC = () => {
         password
       );
       const user = userCredential.user;
-      // if (user) {
+      // await sendEmailVerification(user);
+      // if (user.emailVerified) {
       navigate("/login");
+      console.log(user);
+
       // }
-      console.log(user, "Signed In");
+      // return userCredential;
     } catch (err: unknown) {
       if (err.code === "auth/email-already-in-use") {
         setPassError("Email is already in use");
       } else {
+        setPassError("");
         console.error(err.code);
         console.error(err.message);
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -133,7 +146,7 @@ const RegisterPage: React.FC = () => {
   };
 
   return (
-    <section className="bg-primaryGrey sm:h-screen lg:h-fit  flex justify-center items-center ">
+    <section className="bg-primaryGrey sm:h-screen lg:h-fit  flex justify-center items-center lg:pb-[5em]">
       <div
         className="form-div mb-[2em] py-5 mt-[3em] rounded-lg flex flex-col gap-[1.6em] justify-center items-center border border-primaryBlue w-[90%] sm:w-[24em] lg:w-[22em]"
         onMouseOver={handleMouseOver}
@@ -141,7 +154,7 @@ const RegisterPage: React.FC = () => {
       >
         <form
           className="flex flex-col gap-[1.6em] w-[90%]"
-          onClick={(e) => e.preventDefault()}
+          onSubmit={(e) => e.preventDefault()}
         >
           <div className="text-center">
             <h1 className="text-4xl font-semibold pb-3 ">
@@ -218,18 +231,21 @@ const RegisterPage: React.FC = () => {
               )}
             </div>
 
-            <div className="flex justify-end items-end">
+            {/* <div className="flex justify-end items-end">
               <p className="text-sm text-primaryLite">Forgot your password?</p>
-            </div>
+            </div> */}
 
             <div className="mt-5 flex justify-center items-center w-full">
               <button
                 className="p-2 w-full bg-primaryBlue rounded-lg font-semibold shadow-inner shadow-primaryBlue"
                 onClick={registerAuthentication}
+                type="submit"
               >
                 Register
               </button>
             </div>
+
+            <Spinner isLoading={isLoading} />
 
             <div>
               <p className="text-center text-primaryLite text-sm flex gap-1 justify-center items-center">
