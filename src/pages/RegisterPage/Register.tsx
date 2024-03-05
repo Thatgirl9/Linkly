@@ -51,7 +51,7 @@ const RegisterPage: React.FC = () => {
       );
       const user = userCredential.user;
       // if (user) {
-      //   navigate("/login");
+      navigate("/login");
       // }
       console.log(user, "Signed In");
     } catch (err: unknown) {
@@ -61,6 +61,15 @@ const RegisterPage: React.FC = () => {
         console.error(err.code);
         console.error(err.message);
       }
+    }
+  };
+
+  const logInGoogle = async () => {
+    try {
+      await signInWithPopup(auth, googleProvider);
+      navigate("/dashboard");
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -250,7 +259,10 @@ const RegisterPage: React.FC = () => {
           </div>
 
           <div className="flex items-center justify-center gap-3 pt-[1em]">
-            <button className="flex items-center justify-center gap-2 border border-primaryBlue bg-primaryBlack p-1 px-2 rounded-md ">
+            <button
+              className="flex items-center justify-center gap-2 border border-primaryBlue bg-primaryBlack p-1 px-2 rounded-md "
+              onClick={logInGoogle}
+            >
               <span>
                 <img
                   src={GoogleIcon}

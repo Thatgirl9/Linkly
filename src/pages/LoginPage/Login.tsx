@@ -27,7 +27,7 @@ const LoginPage: React.FC = () => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
-        navigate("/dashboard");
+        // navigate("/dashboard");
       } else {
         setUser(null);
       }
@@ -63,6 +63,7 @@ const LoginPage: React.FC = () => {
   const logInGoogle = async () => {
     try {
       await signInWithPopup(auth, googleProvider);
+      navigate("/dashboard");
     } catch (err) {
       console.error(err);
     }
