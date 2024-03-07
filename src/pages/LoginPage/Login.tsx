@@ -3,10 +3,10 @@ import PasswordInput from "../../components/PasswordInput";
 // import { auth, googleProvider } from "../../config/";
 import { auth, googleProvider } from "../../config/firebase.js";
 import {
-  // createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signInWithPopup,
   onAuthStateChanged,
+  // sendPasswordResetEmail,
 } from "firebase/auth";
 
 import Line from "../../assets/LoginPage/Vector 8.svg";
@@ -94,7 +94,7 @@ const LoginPage: React.FC = () => {
       >
         <form
           className="flex flex-col gap-[1.6em] w-[90%]"
-          onClick={(e) => e.preventDefault()}
+          onSubmit={(e) => e.preventDefault()}
         >
           <div>
             <h1 className="text-4xl font-semibold pb-3 text-center">
@@ -136,7 +136,10 @@ const LoginPage: React.FC = () => {
             </div>
 
             <div className="flex justify-end items-end">
-              <p className="text-sm text-primaryLite">Forgot your password?</p>
+              <Link to="/forgotpassword" className="text-sm text-primaryLite">
+                Forgot your password?
+              </Link>
+              <p></p>
             </div>
 
             <div className="mt-5 flex justify-center items-center w-full">
