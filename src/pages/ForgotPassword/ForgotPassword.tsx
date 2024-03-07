@@ -20,8 +20,10 @@ const ForgotPassword: React.FC = () => {
 
     try {
       // send password reset email
+      await new Promise((resolve) => setTimeout(resolve, 10000));
+
       await sendPasswordResetEmail(auth, email);
-      // alert("Password reset email sent successfully. Please check your email");
+      alert("Password reset email sent successfully. Please check your email");
       setMessage(
         "Password reset email sent successfully. Please check your email"
       );
@@ -41,10 +43,13 @@ const ForgotPassword: React.FC = () => {
         className="flex justify-center items-center flex-col mt-[3em]"
       >
         <h2 className="font-bold py-[2em] text-3xl">Forgot Password...</h2>
-        <p className="">Enter your email to reset your password</p>
+        <p className="mb-[1em] text-primaryPink font-medium">
+          Enter your email to reset your password
+        </p>
         <input
           type="email"
           placeholder="Email"
+          className="py-3 px-4 w-full rounded-lg focus:outline-none bg-primaryBlack border-primaryPink focus:border-b-2 border"
           required
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -52,7 +57,12 @@ const ForgotPassword: React.FC = () => {
         {message && <p>{message}</p>}
         {error && <p>{error}</p>}
         {isLoading && <Spinner isLoading={isLoading} />}
-        <button type="submit">Reset Password</button>
+        <button
+          type="submit"
+          className="mt-[2em] border-2 border-primaryBlue px-2 p-1 rounded-md font-medium"
+        >
+          Reset Password
+        </button>
       </form>
     </section>
   );
