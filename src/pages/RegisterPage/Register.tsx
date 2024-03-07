@@ -6,6 +6,7 @@ import {
   createUserWithEmailAndPassword,
   signInWithPopup,
   sendEmailVerification,
+  applyActionCode,
 } from "firebase/auth";
 
 import Line from "../../assets/LoginPage/Vector 8.svg";
@@ -30,6 +31,8 @@ const RegisterPage: React.FC = () => {
   const [passwordError, setPasswordError] = useState("");
   const [passwordConfirmError, setPasswordConfirmError] = useState("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [verificationEmail, setVerificationEmail] = useState("");
+  const [verifiedEmail, setVerifiedEmail] = useState("");
 
   // Scrolling Solution
   useEffect(() => {
@@ -57,15 +60,39 @@ const RegisterPage: React.FC = () => {
         password
       );
       const user = userCredential.user;
+      // Wait for 10 seconds before sending the verification email
+      await new Promise((resolve) => setTimeout(resolve, 10000));
+
       await sendEmailVerification(user);
-      alert(
+
+      setVerificationEmail(
         "Verification Email sent successfully! Please verify your email to login."
       );
-      if (user.emailVerified) {
-        navigate("/login");
-        console.log(user);
-      } else {
-        alert("Email not verified, Please Enter a valid email");
+
+      // alert(
+      //   "Verification Email sent successfully! Please verify your email to login."
+      // );
+
+      await new Promise((resolve) => {
+        setTimeout(resolve, 10000);
+      });
+
+      // Apply the action code
+      try {
+        await sendEmailVerification(auth.currentUser);
+
+        if (auth.currentUser?.emailVerified) {
+          navigate("/login");
+          console.log(auth.currentUser);
+        } else {
+          alert("Email not verified, Please Enter a valid email");
+        }
+      } catch (err) {
+        setVerificationEmail(
+          "Verification link is invalid or expired. Please request a new verification email."
+        );
+        console.error(err);
+        await sendEmailVerification(user);
       }
       return userCredential;
     } catch (err: unknown) {
@@ -150,7 +177,7 @@ const RegisterPage: React.FC = () => {
   };
 
   return (
-    <section className="bg-primaryGrey h-full sm:h-screen lg:h-fit  flex justify-center items-center pb-[5em]">
+    <section className="bg-primaryGrey h-full lg:h-fit  flex justify-center items-center pb-[5em]">
       <div
         className="form-div mb-[2em] py-5 mt-[3em] rounded-lg flex flex-col gap-[1.6em] justify-center items-center border border-primaryBlue w-[90%] sm:w-[24em] lg:w-[22em]"
         onMouseOver={handleMouseOver}
@@ -234,6 +261,16 @@ const RegisterPage: React.FC = () => {
                 </p>
               )}
             </div>
+
+            {verificationEmail && (
+              <p className="text-primaryLite text-sm mt-1">
+                {verificationEmail}
+              </p>
+            )}
+
+            {verifiedEmail && (
+              <p className="text-red-500 text-sm mt-1">{verifiedEmail}</p>
+            )}
 
             {/* <div className="flex justify-end items-end">
               <p className="text-sm text-primaryLite">Forgot your password?</p>
