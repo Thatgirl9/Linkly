@@ -15,9 +15,9 @@
 :root {
   /* background-image: url(../src/assets/Group\ 17.png); */
 
-  /* background-color: #0b101b; */
+  background-color: #0b101b;
   /* background-color: white; */
-  color-scheme: light dark;
+  /* color-scheme: light dark; */
 
   font-family: "Inter", sans-serif;
   line-height: 1.5;

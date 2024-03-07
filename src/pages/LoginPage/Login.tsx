@@ -86,9 +86,9 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <section className="bg-primaryGrey h-screen flex justify-center items-center ">
+    <section className="bg-primaryGrey  md:h-screen lg:h-fit pb-[5em] flex justify-center items-center ">
       <div
-        className="form-div border border-primaryBlue p-5 rounded-lg flex flex-col gap-[1.6em] w-[90%]  justify-center items-center sm:w-[24em] lg:w-[22em]"
+        className="form-div border border-primaryBlue p-5 rounded-lg flex flex-col gap-[1.6em] w-[90%]  justify-center items-center sm:w-[24em] lg:w-[22em] mt-[4em]"
         onMouseOver={handleMouseOver}
         onMouseLeave={handleMouseLeave}
       >

@@ -24,6 +24,7 @@ const LandingPage: React.FC = () => {
   const [shortUrl, setShortUrl] = useState("");
   const [qrCode, setQrCode] = useState("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [invalidLink, setInValidLink] = useState<boolean>(false);
   // const [copy, setCopy] = useState(false);
 
   // console.log(import.meta.env);
@@ -59,45 +60,55 @@ const LandingPage: React.FC = () => {
 
   const handleFormSubmit = async (longUrl: string) => {
     setIsLoading(true);
-    try {
-      // const apiToken = (window as any).REACT_APP_BITLY_TOKEN;
-      // const groupGuid = "Ba1bc23dE4F";
 
-      const response = await fetch(
-        "https://api.tinyurl.com/create?api_token=sX9Z93j8f6BRAy10xkh4esULwnyvDrUO5LaMgmLjGFLKSiMJenrmFsmiv0jD",
-        {
-          method: "POST",
-          headers: {
-            // Authorization: `Bearer ${apiToken}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            url: longUrl,
-            domain: "tinyurl.com",
-            description: "string",
-            // group_guid: groupGuid,
-          }),
+    if (/(https?:\/\/[^\s]+)/g.test(longUrl)) {
+      setInValidLink(false);
+      try {
+        // const apiToken = (window as any).REACT_APP_BITLY_TOKEN;
+        // const groupGuid = "Ba1bc23dE4F";
+
+        const response = await fetch(
+          "https://api.tinyurl.com/create?api_token=sX9Z93j8f6BRAy10xkh4esULwnyvDrUO5LaMgmLjGFLKSiMJenrmFsmiv0jD",
+          {
+            method: "POST",
+            headers: {
+              // Authorization: `Bearer ${apiToken}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              url: longUrl,
+              domain: "tinyurl.com",
+              description: "string",
+              // group_guid: groupGuid,
+            }),
+          }
+        );
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log(data);
+          const result = data.data.tiny_url;
+          console.log(result);
+          setShortUrl(result);
+          // setShortUrl(data.data.tiny_url.shortUrl);
+          const qrCode = data.data.tiny_url;
+          console.log(qrCode);
+          setQrCode(qrCode);
+        } else {
+          console.error("Error", response.statusText);
         }
-      );
-
-      if (response.ok) {
-        const data = await response.json();
-        console.log(data);
-        const result = data.data.tiny_url;
-        console.log(result);
-        setShortUrl(result);
-        // setShortUrl(data.data.tiny_url.shortUrl);
-        const qrCode = data.data.tiny_url;
-        console.log(qrCode);
-        setQrCode(qrCode);
-      } else {
-        console.error("Error", response.statusText);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setIsLoading(false);
       }
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setIsLoading(false);
+    } else {
+      setInValidLink(true), setIsLoading(false);
     }
+  };
+
+  const handleInputFocus = () => {
+    setInValidLink(false);
   };
 
   return (
@@ -121,7 +132,8 @@ const LandingPage: React.FC = () => {
         <div className="flex flex-col gap-[1.9em] lg:gap-[1.5em] justify-center items-center">
           {/* Link Input */}
 
-          <Form onSubmit={handleFormSubmit} />
+          <Form onSubmit={handleFormSubmit} onFocus={handleInputFocus} />
+          <p className="text-red-500">{invalidLink ? "Invalid Link" : ""}</p>
           <Spinner isLoading={isLoading} />
 
           {shortUrl && <ShortLink url={shortUrl} qrCode={qrCode} />}
