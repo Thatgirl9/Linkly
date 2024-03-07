@@ -57,13 +57,17 @@ const RegisterPage: React.FC = () => {
         password
       );
       const user = userCredential.user;
-      // await sendEmailVerification(user);
-      // if (user.emailVerified) {
-      navigate("/login");
-      console.log(user);
-
-      // }
-      // return userCredential;
+      await sendEmailVerification(user);
+      alert(
+        "Verification Email sent successfully! Please verify your email to login."
+      );
+      if (user.emailVerified) {
+        navigate("/login");
+        console.log(user);
+      } else {
+        alert("Email not verified, Please Enter a valid email");
+      }
+      return userCredential;
     } catch (err: unknown) {
       if (err.code === "auth/email-already-in-use") {
         setPassError("Email is already in use");
@@ -146,7 +150,7 @@ const RegisterPage: React.FC = () => {
   };
 
   return (
-    <section className="bg-primaryGrey sm:h-screen lg:h-fit  flex justify-center items-center lg:pb-[5em]">
+    <section className="bg-primaryGrey h-full sm:h-screen lg:h-fit  flex justify-center items-center pb-[5em]">
       <div
         className="form-div mb-[2em] py-5 mt-[3em] rounded-lg flex flex-col gap-[1.6em] justify-center items-center border border-primaryBlue w-[90%] sm:w-[24em] lg:w-[22em]"
         onMouseOver={handleMouseOver}
