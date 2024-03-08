@@ -31,8 +31,8 @@ const RegisterPage: React.FC = () => {
   const [passwordError, setPasswordError] = useState("");
   const [passwordConfirmError, setPasswordConfirmError] = useState("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [verificationEmail, setVerificationEmail] = useState("");
-  const [verifiedEmail, setVerifiedEmail] = useState("");
+  const [verification, setVerification] = useState("");
+  // const [verifiedEmail, setVerifiedEmail] = useState("");
 
   // Scrolling Solution
   useEffect(() => {
@@ -62,42 +62,18 @@ const RegisterPage: React.FC = () => {
       const user = userCredential.user;
       // Wait for 10 seconds before sending the verification email
       await new Promise((resolve) => setTimeout(resolve, 10000));
-
-      await sendEmailVerification(user);
-
-      setVerificationEmail(
-        "Verification Email sent successfully! Please verify your email to login."
-      );
-
-      // alert(
-      //   "Verification Email sent successfully! Please verify your email to login."
-      // );
-
-      await new Promise((resolve) => {
-        setTimeout(resolve, 10000);
-      });
-
-      // Apply the action code
-      try {
-        await sendEmailVerification(auth.currentUser);
-
-        if (auth.currentUser?.emailVerified) {
-          navigate("/login");
-          console.log(auth.currentUser);
-        } else {
-          alert("Email not verified, Please Enter a valid email");
-        }
-      } catch (err) {
-        setVerificationEmail(
-          "Verification link is invalid or expired. Please request a new verification email."
-        );
-        console.error(err);
-        await sendEmailVerification(user);
+      if (user) {
+        setVerification("Account Created Successfully!");
+        await new Promise((resolve) => setTimeout(resolve, 5000));
+        navigate("/login");
       }
-      return userCredential;
     } catch (err: unknown) {
-      if (err.code === "auth/email-already-in-use") {
+      if (
+        err.code === "auth/email-already-in-use" ||
+        err.code === "auth/invalid-email"
+      ) {
         setPassError("Email is already in use");
+        setPassError("Invalid Email");
       } else {
         setPassError("");
         console.error(err.code);
@@ -262,19 +238,11 @@ const RegisterPage: React.FC = () => {
               )}
             </div>
 
-            {verificationEmail && (
-              <p className="text-primaryLite text-sm mt-1">
-                {verificationEmail}
+            {verification && (
+              <p className="text-green-500 text-base mt-1 font-medium">
+                {verification}
               </p>
             )}
-
-            {verifiedEmail && (
-              <p className="text-red-500 text-sm mt-1">{verifiedEmail}</p>
-            )}
-
-            {/* <div className="flex justify-end items-end">
-              <p className="text-sm text-primaryLite">Forgot your password?</p>
-            </div> */}
 
             <div className="mt-5 flex justify-center items-center w-full">
               <button
@@ -346,7 +314,7 @@ const RegisterPage: React.FC = () => {
 
         <div className="text-center w-[90%] text-primaryLite">
           <p className="text-xs">
-            By signing up, you agree to Linkly's Terms of Service, Privacy
+            By registering, you agree to Linkly's Terms of Service, Privacy
             Policy and Acceptable Use Policy.
           </p>
         </div>
