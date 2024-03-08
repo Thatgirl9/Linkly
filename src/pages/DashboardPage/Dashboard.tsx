@@ -1,9 +1,18 @@
+import { HotTable } from "@handsontable/react";
+import { registerAllModules } from "handsontable/registry";
+import "handsontable/dist/handsontable.full.min.css";
 import "./dashboard.css";
 import Icon from "../../assets/Group 18.png";
 import Form from "../../components/FormUrl";
 import Spinner from "../../components/Spinner";
 import ShortLink from "../../components/ShortenedLink";
 import { useEffect, useState } from "react";
+import { signOut } from "firebase/auth";
+import { auth} from "../config/firebase";
+
+// register Handsontable's modules
+registerAllModules();
+
 const DashboardPage: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [notification, setNotification] = useState<boolean>(false);
@@ -103,6 +112,16 @@ const DashboardPage: React.FC = () => {
   const handleInputFocus = () => {
     setInValidLink(false);
   };
+
+  // const logOut = () => {
+  const logOut = async () => {
+    try {
+      await signOut(auth);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  // };
 
   return (
     <section className="dashboard-section ">
@@ -294,7 +313,22 @@ const DashboardPage: React.FC = () => {
         {shortUrl && <ShortLink url={shortUrl} qrCode={qrCode} />}
       </div>
 
-      <h1>Dashboard page beecheeess</h1>
+      <div className="bg-stroke opacity-25 h-[50vh]">
+        <HotTable
+          data={[
+            ["Short Link", "Original Link", "QRCode", "Toyota", "Ford"],
+            ["2019", 10, 11, 12, 13],
+            ["2020", 20, 11, 14, 13],
+            ["2021", 30, 15, 12, 13],
+          ]}
+          rowHeaders={true}
+          colHeaders={true}
+          height="auto"
+          autoWrapRow={true}
+          autoWrapCol={true}
+          licenseKey="non-commercial-and-evaluation" // for non-commercial use only
+        />
+      </div>
 
       <div className="bg-stroke opacity-25 h-[50vh]">
         <div className="bg-gray-800">
