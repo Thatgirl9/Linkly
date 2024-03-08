@@ -10,11 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@handsontable/react": "^14.2.0",
     "@types/firebase": "^3.2.1",
     "animate.css": "^4.1.1",
     "axios": "^1.6.7",
     "dotenv": "^16.4.5",
     "firebase": "^10.8.1",
+    "handsontable": "^14.2.0",
     "html2canvas": "^1.4.1",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.4",
