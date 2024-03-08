@@ -1,0 +1,14 @@
+.dashboard-section {
+  background-image: url(../src/assets/Group\ 17.png);
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-color: #0b101b;
+}
+
+@media screen and (max-width: 768px) {
+  .dashboard-section {
+    background-image: url(../src/assets/Cubes.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+  }
+}

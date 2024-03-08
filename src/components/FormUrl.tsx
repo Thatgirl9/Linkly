@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { CSSProperties, useState } from "react";
 import InputLink from "../assets/link.png";
 
 interface FormProps {
   onSubmit: (url: string) => void;
   onFocus: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  style: CSSProperties;
 }
 
-const Form: React.FC<FormProps> = ({ onSubmit, onFocus }) => {
+const Form: React.FC<FormProps> = ({ onSubmit, onFocus, style }) => {
   const [url, setUrl] = useState("");
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -21,7 +22,10 @@ const Form: React.FC<FormProps> = ({ onSubmit, onFocus }) => {
 
   return (
     <form onSubmit={handleSubmit} className="flex justify-center items-center">
-      <div className="sm:w-[30em] w-[90%]  rounded-full flex items-center justify-center gap-2 bg-primaryGrey px-[0.3em] h-[3.3em] border-[3px] border-stroke">
+      <div
+        className="sm:w-[30em] w-[90%]  rounded-full flex items-center justify-center gap-2 bg-primaryGrey px-[0.3em] h-[3.3em] border-[3px] border-stroke"
+        style={style}
+      >
         <img
           src={InputLink}
           alt="Link Icon"

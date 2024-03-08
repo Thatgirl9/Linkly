@@ -20,6 +20,7 @@ const LoginPage: React.FC = () => {
   const [password, setPassword] = useState("");
   const [user, setUser] = useState<any>(null);
   const [errorMessage, setErrorMessage] = useState("");
+  const [login, setLogin] = useState("");
 
   const navigate = useNavigate();
 
@@ -47,6 +48,8 @@ const LoginPage: React.FC = () => {
       );
       const user = userCredential.user;
       setUser(user);
+      setLogin("Login Successful!");
+      await new Promise((resolve) => setTimeout(resolve, 5000));
       navigate("/dashboard");
     } catch (err: unknown) {
       console.error(err);
@@ -141,6 +144,12 @@ const LoginPage: React.FC = () => {
               </Link>
               <p></p>
             </div>
+
+            {login && (
+              <p className="text-green-500 text-base mt-1 font-medium">
+                {login}
+              </p>
+            )}
 
             <div className="mt-5 flex justify-center items-center w-full">
               <button

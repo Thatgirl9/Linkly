@@ -132,7 +132,11 @@ const LandingPage: React.FC = () => {
         <div className="flex flex-col gap-[1.9em] lg:gap-[1.5em] justify-center items-center">
           {/* Link Input */}
 
-          <Form onSubmit={handleFormSubmit} onFocus={handleInputFocus} />
+          <Form
+            onSubmit={handleFormSubmit}
+            onFocus={handleInputFocus}
+            style={{ width: "90%", maxWidth: "30em" }}
+          />
           <p className="text-red-500">{invalidLink ? "Invalid Link" : ""}</p>
           <Spinner isLoading={isLoading} />
 
