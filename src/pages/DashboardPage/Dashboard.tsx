@@ -49,11 +49,21 @@ const DashboardPage: React.FC = () => {
     setProfile(!profile);
   };
 
-  const handleOutsideClick = (e) => {
-    if (e.target.id === "dropdown-button" && e.target.id === "dropdown") {
+  const handleOutsideClick = (e: MouseEvent) => {
+    const target = e.target as HTMLElement;
+    if (
+      target &&
+      (target.id === "dropdown-button" || target.id === "dropdown")
+    ) {
       setIsOpen(false);
     }
   };
+
+  // const handleOutsideClick = (e: MouseEvent) => {
+  //   if (e.target.id === "dropdown-button" || e.target.id === "dropdown") {
+  //     setIsOpen(false);
+  //   }
+  // };
 
   useEffect(() => {
     document.addEventListener("click", handleOutsideClick);
