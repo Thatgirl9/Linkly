@@ -8,7 +8,8 @@ import Spinner from "../../components/Spinner";
 import ShortLink from "../../components/ShortenedLink";
 import { useEffect, useState } from "react";
 import { signOut } from "firebase/auth";
-import { auth} from "../config/firebase";
+import { auth } from "../../config/firebase.js";
+import { useNavigate } from "react-router-dom";
 
 // register Handsontable's modules
 registerAllModules();
@@ -21,6 +22,7 @@ const DashboardPage: React.FC = () => {
   const [invalidLink, setInValidLink] = useState<boolean>(false);
   const [shortUrl, setShortUrl] = useState("");
   const [qrCode, setQrCode] = useState("");
+  const navigate = useNavigate();
 
   const handleClick = () => {
     if (notification) {
@@ -47,7 +49,7 @@ const DashboardPage: React.FC = () => {
     setProfile(!profile);
   };
 
-  const handleOutsideClick = (e: any) => {
+  const handleOutsideClick = (e) => {
     if (e.target.id === "dropdown-button" && e.target.id === "dropdown") {
       setIsOpen(false);
     }
@@ -59,6 +61,16 @@ const DashboardPage: React.FC = () => {
       document.removeEventListener("click", handleOutsideClick);
     };
   }, []);
+
+  const logOut = async () => {
+    try {
+      await signOut(auth);
+      await new Promise((resolve) => setTimeout(resolve, 5000));
+      navigate("/");
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const dashboardFormSubmit = async (longUrl: string) => {
     setIsLoading(true);
@@ -112,16 +124,6 @@ const DashboardPage: React.FC = () => {
   const handleInputFocus = () => {
     setInValidLink(false);
   };
-
-  // const logOut = () => {
-  const logOut = async () => {
-    try {
-      await signOut(auth);
-    } catch (err) {
-      console.error(err);
-    }
-  };
-  // };
 
   return (
     <section className="dashboard-section ">
@@ -258,8 +260,10 @@ const DashboardPage: React.FC = () => {
               {isOpen && (
                 <div className="absolute top-14 right-0 bg-primaryPink w-[6em]  shadow-md rounded-md ">
                   {/* <ul className="list-none "> */}
-                  <button className="flex gap-2 px-2 py-1 h-full w-[6em]">
-                    <span>Logout</span>
+                  <button
+                    className="flex gap-2 px-2 py-1 h-full w-[6em] items-center"
+                    onClick={logOut}
+                  >
                     <span className="w-24">
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -270,6 +274,7 @@ const DashboardPage: React.FC = () => {
                         <path d="M502.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 224 192 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l210.7 0-73.4 73.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l128-128zM160 96c17.7 0 32-14.3 32-32s-14.3-32-32-32L96 32C43 32 0 75 0 128L0 384c0 53 43 96 96 96l64 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-64 0c-17.7 0-32-14.3-32-32l0-256c0-17.7 14.3-32 32-32l64 0z" />
                       </svg>
                     </span>
+                    <span className="font-bold">Logout</span>
                   </button>
                   {/* </ul> */}
                 </div>
