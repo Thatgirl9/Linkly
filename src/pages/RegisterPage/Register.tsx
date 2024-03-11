@@ -2,12 +2,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import PasswordInput from "../../components/PasswordInput";
 import { auth, googleProvider } from "../../config/firebase.js";
-import {
-  createUserWithEmailAndPassword,
-  signInWithPopup,
-  sendEmailVerification,
-  applyActionCode,
-} from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 
 import Line from "../../assets/LoginPage/Vector 8.svg";
 import GoogleIcon from "../../assets/LoginPage/logo_googleg_48dp.png";
@@ -67,7 +62,7 @@ const RegisterPage: React.FC = () => {
         await new Promise((resolve) => setTimeout(resolve, 5000));
         navigate("/login");
       }
-    } catch (err: unknown) {
+    } catch (err: any) {
       if (
         err.code === "auth/email-already-in-use" ||
         err.code === "auth/invalid-email"
@@ -150,6 +145,7 @@ const RegisterPage: React.FC = () => {
     }
     // Update the Confirm password state
     setPasswordConfirm(newPassword);
+    console.log(passwordConfirm);
   };
 
   return (

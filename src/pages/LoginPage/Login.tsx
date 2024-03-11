@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link, useNavigate } from "react-router-dom";
 import PasswordInput from "../../components/PasswordInput";
 // import { auth, googleProvider } from "../../config/";
@@ -24,6 +25,8 @@ const LoginPage: React.FC = () => {
 
   const navigate = useNavigate();
 
+  console.log(user);
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -48,13 +51,15 @@ const LoginPage: React.FC = () => {
       );
       const user = userCredential.user;
       setUser(user);
+
       setLogin("Login Successful!");
       await new Promise((resolve) => setTimeout(resolve, 5000));
       navigate("/dashboard");
-    } catch (err: unknown) {
+    } catch (err: any) {
       console.error(err);
       setErrorMessage(err.code);
-      // if (err.code === "auth/invalid-credential") {
+
+      // if ((err as Error).code === "auth/invalid-credential") {
 
       //   navigate("/register");
       // } else {
