@@ -7,10 +7,13 @@ interface QRCodeComponentProps {
 }
 
 const QrCode: React.FC<QRCodeComponentProps> = ({ qrUrl }) => {
-  const qrCodeRef = useRef<HTMLCanvasElement | null>(null);
+  // const qrCodeRef = useRef<HTMLCanvasElement | null>(null);
+  // const svgRef = useRef<SVGSVGElement | null>(null);
+  const qrCodeRef = useRef(null);
 
   const downloadQRCode = () => {
-    const canvas = qrCodeRef.current;
+    // if (qrCodeRef.current) {
+    const canvas = qrCodeRef.current as unknown as HTMLCanvasElement;
     const pngUrl = canvas
       ?.toDataURL("image/png")
       .replace("image/png", "image/octet-stream");
