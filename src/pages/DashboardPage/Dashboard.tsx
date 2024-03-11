@@ -229,8 +229,8 @@ const DashboardPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Form Url */}
-          <div className="mt-[5em] lg:mt-0 flex flex-col lg:block ">
+          {/* Form Url - Mobile view */}
+          <div className="mt-[5em] lg:mt-0 flex flex-col lg:block items-center justify-center">
             <Form
               onSubmit={dashboardFormSubmit}
               onFocus={handleInputFocus}
@@ -345,9 +345,11 @@ const DashboardPage: React.FC = () => {
         />
       </div>
 
-      <div className="bg-stroke opacity-25 h-[50vh]">
-        <div className="bg-gray-800">
+      <div className="">
+        <div className="">
           <h2 className="text-white">Wassuppp</h2>
+          <h3>Under construction</h3>
+          <h1>I don't even know what's going on again, nawa oh</h1>
         </div>
       </div>
     </section>
