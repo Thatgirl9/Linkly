@@ -137,8 +137,8 @@ const DashboardPage: React.FC = () => {
 
   return (
     <section className="dashboard-section ">
-      <header className="px-[1em] sm:px-[2em]  py-[1em] w-full ">
-        <nav className="flex flex-col lg:flex-row lg:justify-between lg:items-center  gap-7 sm:gap-4 ">
+      <header className="px-[1em] sm:px-[2em]  py-[1em] lg:py-[2em] w-full ">
+        <nav className="flex flex-col lg:flex-row lg:justify-between   gap-7 sm:gap-4 ">
           {/* Useful in Mobile View */}
 
           <div className="flex justify-between">
@@ -229,12 +229,19 @@ const DashboardPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Form Url - Mobile view */}
-          <div className="mt-[5em] lg:mt-0 flex flex-col lg:block items-center justify-center">
+          {/* Form Url - Mobile view/Laptop */}
+          <div className="mt-[5em] lg:mt-0 flex flex-col lg:flex ">
             <Form
               onSubmit={dashboardFormSubmit}
               onFocus={handleInputFocus}
-              style={{ width: "100%", maxWidth: "35em", marginBottom: "1em" }}
+              style={{
+                width: "100%",
+                maxWidth: "35em",
+                marginBottom: "1em",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
             />
             <div className="block lg:hidden">
               <p className="text-red-500">
@@ -320,7 +327,7 @@ const DashboardPage: React.FC = () => {
         </nav>
       </header>
 
-      {/* Result form  search bar */}
+      {/* Result form  search bar- laptop */}
       <div className="hidden lg:block">
         <p className="text-red-500">{invalidLink ? "Invalid Link" : ""}</p>
         <Spinner isLoading={isLoading} />
