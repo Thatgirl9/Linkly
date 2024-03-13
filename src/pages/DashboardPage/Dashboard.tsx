@@ -20,6 +20,7 @@ const DashboardPage: React.FC = () => {
   const [profile, setProfile] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [invalidLink, setInValidLink] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<null>(null);
   const [shortUrl, setShortUrl] = useState("");
   const [qrCode, setQrCode] = useState("");
   const navigate = useNavigate();
@@ -85,12 +86,15 @@ const DashboardPage: React.FC = () => {
   const dashboardFormSubmit = async (longUrl: string) => {
     setIsLoading(true);
 
-    if (/(https?:\/\/[^\s]+)/g.test(longUrl)) {
-      setInValidLink(false);
-      try {
-        // const apiToken = (window as any).REACT_APP_BITLY_TOKEN;
-        // const groupGuid = "Ba1bc23dE4F";
+    const linkValid =
+      longUrl.startsWith("http://") || longUrl.startsWith("https://");
 
+    const updateLinkValid = linkValid ? longUrl : `https://${longUrl}`;
+
+    if (!/^[0-9]+$/.test(longUrl)) {
+      setInValidLink(false);
+      console.log(updateLinkValid);
+      try {
         const response = await fetch(
           "https://api.tinyurl.com/create?api_token=sX9Z93j8f6BRAy10xkh4esULwnyvDrUO5LaMgmLjGFLKSiMJenrmFsmiv0jD",
           {
@@ -100,7 +104,7 @@ const DashboardPage: React.FC = () => {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              url: longUrl,
+              url: updateLinkValid,
               domain: "tinyurl.com",
               description: "string",
               // group_guid: groupGuid,
@@ -121,13 +125,15 @@ const DashboardPage: React.FC = () => {
         } else {
           console.error("Error", response.statusText);
         }
-      } catch (err) {
-        console.error(err);
+      } catch (err: any) {
+        console.error(err.message);
+        setErrorMessage(err.message);
       } finally {
         setIsLoading(false);
       }
     } else {
-      setInValidLink(true), setIsLoading(false);
+      setInValidLink(true);
+      setIsLoading(false);
     }
   };
 
@@ -247,6 +253,7 @@ const DashboardPage: React.FC = () => {
               <p className="text-red-500">
                 {invalidLink ? "Invalid Link" : ""}
               </p>
+              {errorMessage && <p className="text-red-500">{errorMessage}</p>}
               <Spinner isLoading={isLoading} />
 
               {shortUrl && <ShortLink url={shortUrl} qrCode={qrCode} />}
