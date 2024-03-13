@@ -25,89 +25,59 @@ const LandingPage: React.FC = () => {
   const [qrCode, setQrCode] = useState("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [invalidLink, setInValidLink] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<null>(null);
   // const [copy, setCopy] = useState(false);
-
-  // console.log(import.meta.env);
-
-  // const handleFormSubmit = async (longUrl: string) => {
-  //   // Call the API to do it's magic (shorten the URL)
-  //   try {
-  //     const apiToken = import.meta.env.REACT_APP_BITLY_TOKEN;
-  //     const response = await axios.post(
-  //       "https://api-ssl.bitly.com/v4/shorten",
-  //       //  body: JSON.stringify({
-  //       { long_url: longUrl, domain: "bit.ly" },
-
-  //       {
-  //         headers: {
-  //           Authorization: `Bearer ${apiToken}`,
-  //           "Content-Type": "application/json",
-  //           group_guid: "Ba1bc23dE4F",
-  //         },
-  //       }
-  //     );
-  //     if (response) {
-  //       // const data = await response.json();
-  //       setShortUrl(response.data.shortUrl);
-  //       setQrCode(response.data.qrCode);
-  //     } else {
-  //       console.error("Error: ", response);
-  //     }
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // };
 
   const handleFormSubmit = async (longUrl: string) => {
     setIsLoading(true);
 
     const linkValid =
-      longUrl.startsWith("http://") ||
-      longUrl.startsWith("https://") ||
-      /^[0-9]+$/.test(longUrl);
-
-    if (!linkValid) {
-      setInValidLink(true);
-    } else {
-      setInValidLink(false);
-    }
+      longUrl.startsWith("http://") || longUrl.startsWith("https://");
 
     const updateLinkValid = linkValid ? longUrl : `https://${longUrl}`;
 
-    try {
-      const response = await fetch(
-        "https://api.tinyurl.com/create?api_token=sX9Z93j8f6BRAy10xkh4esULwnyvDrUO5LaMgmLjGFLKSiMJenrmFsmiv0jD",
-        {
-          method: "POST",
-          headers: {
-            // Authorization: `Bearer ${apiToken}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            url: updateLinkValid,
-            domain: "tinyurl.com",
-            description: "string",
-            // group_guid: groupGuid,
-          }),
-        }
-      );
+    if (!/^[0-9]+$/.test(longUrl)) {
+      setInValidLink(false);
+      console.log(updateLinkValid);
+      try {
+        const response = await fetch(
+          "https://api.tinyurl.com/create?api_token=sX9Z93j8f6BRAy10xkh4esULwnyvDrUO5LaMgmLjGFLKSiMJenrmFsmiv0jD",
+          {
+            method: "POST",
+            headers: {
+              // Authorization: `Bearer ${apiToken}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              url: updateLinkValid,
+              domain: "tinyurl.com",
+              description: "string",
+              // group_guid: groupGuid,
+            }),
+          }
+        );
 
-      if (response.ok) {
-        const data = await response.json();
-        console.log(data);
-        const result = data.data.tiny_url;
-        console.log(result);
-        setShortUrl(result);
-        // setShortUrl(data.data.tiny_url.shortUrl);
-        const qrCode = data.data.tiny_url;
-        console.log(qrCode);
-        setQrCode(qrCode);
-      } else {
-        console.error("Error", response.statusText);
+        if (response.ok) {
+          const data = await response.json();
+          console.log(data);
+          const result = data.data.tiny_url;
+          console.log(result);
+          setShortUrl(result);
+          // setShortUrl(data.data.tiny_url.shortUrl);
+          const qrCode = data.data.tiny_url;
+          console.log(qrCode);
+          setQrCode(qrCode);
+        } else {
+          console.error("Error", response.statusText);
+        }
+      } catch (err: any) {
+        console.error(err.message);
+        setErrorMessage(err.message);
+      } finally {
+        setIsLoading(false);
       }
-    } catch (err) {
-      console.error(err);
-    } finally {
+    } else {
+      setInValidLink(true);
       setIsLoading(false);
     }
   };
@@ -143,6 +113,7 @@ const LandingPage: React.FC = () => {
             style={{ width: "90%", maxWidth: "30em" }}
           />
           <p className="text-red-500">{invalidLink ? "Invalid Link" : ""}</p>
+          {errorMessage && <p className="text-red-500">{errorMessage}</p>}
           <Spinner isLoading={isLoading} />
 
           {shortUrl && <ShortLink url={shortUrl} qrCode={qrCode} />}
