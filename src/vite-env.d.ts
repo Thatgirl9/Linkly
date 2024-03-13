@@ -23,4 +23,6 @@ declare module "*.js" {
   const googleProvider: any;
   export default value;
   export { auth, googleProvider };
+  const supabase: any;
+  export { supabase };
 }

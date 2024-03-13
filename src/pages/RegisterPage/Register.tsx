@@ -1,8 +1,8 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import PasswordInput from "../../components/PasswordInput";
-// import supabase from "../../config/supabaseClient.js";
-import { createClient, SupabaseClient } from "@supabase/supabase-js";
+import { supabase } from "../../config/supabaseClient.js";
+// import { createClient, SupabaseClient } from "@supabase/supabase-js";
 // import { auth, googleProvider } from "../../config/firebase.js";
 // import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 
@@ -35,6 +35,10 @@ const RegisterPage: React.FC = () => {
     window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
   }, [pathname]);
 
+  // const supabaseUrl = import.meta.env.VITE_APP_SUPABASE_URL;
+  // const supabaseKey = import.meta.env.VITE_APP_ANON_KEY;
+  // const supabase: SupabaseClient = createClient(supabaseUrl, supabaseKey);
+
   // Shadow when mouse is hovering on the Form
   const handleMouseOver = () => {
     const form = document.querySelector(".form-div");
@@ -51,9 +55,6 @@ const RegisterPage: React.FC = () => {
   const registerAuthentication = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    const supabaseUrl = import.meta.env.VITE_APP_SUPABASE_URL;
-    const supabaseKey = import.meta.env.VITE_APP_ANON_KEY;
-    const supabase: SupabaseClient = createClient(supabaseUrl, supabaseKey);
 
     try {
       const { data, error } = await supabase.auth.signUp({
