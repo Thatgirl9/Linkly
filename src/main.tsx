@@ -9,6 +9,8 @@ import LoginPage from "./pages/LoginPage/Login";
 import RegisterPage from "./pages/RegisterPage/Register";
 import DashboardPage from "./pages/DashboardPage/Dashboard";
 import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
+// import AuthRoute from "./pages/ProtectedAuthRoute/AuthRoute";
+// import AuthProvider from "./pages/ProtectedAuthRoute/AuthContext";
 
 // dotenv.config
 
@@ -28,7 +30,13 @@ const router = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <DashboardPage />,
+    element: (
+      // (
+      // <AuthRoute>
+      <DashboardPage />
+    ),
+    // </AuthRoute>
+    // ),
   },
   {
     path: "/forgotpassword",
@@ -46,6 +54,9 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
+    {/* <AuthProvider> */}
     <RouterProvider router={router} />
+    {/* </AuthProvider> */}
+    {/* <RouterProvider router={router} /> */}
   </React.StrictMode>
 );
