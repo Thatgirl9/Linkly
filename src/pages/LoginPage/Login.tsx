@@ -1,15 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link, useNavigate } from "react-router-dom";
 import PasswordInput from "../../components/PasswordInput";
-import supabase from "../../config/supabaseClient.js";
-// import { auth, googleProvider } from "../../config/";
-// import { auth, googleProvider } from "../../config/firebase.js";
-// import {
-//   signInWithEmailAndPassword,
-//   signInWithPopup,
-//   onAuthStateChanged,
-//   // sendPasswordResetEmail,
-// } from "firebase/auth";
+// import supabase from "../../config/supabaseClient.js";
+import { createClient, SupabaseClient } from "@supabase/supabase-js";
 
 import Line from "../../assets/LoginPage/Vector 8.svg";
 import GoogleIcon from "../../assets/LoginPage/logo_googleg_48dp.png";
@@ -26,48 +19,22 @@ const LoginPage: React.FC = () => {
 
   const navigate = useNavigate();
 
-  // console.log(user);
+  console.log(user);
 
-  // function listenToSignInEvent() {
-  //   supabase.auth.onAuthStateChanged((event: any, session: any) => {
-  //     if (event === "SIGNED_IN") {
-  //       console.log("User signed in:", session.user);
-  //     }
-  //   });
-  // }
+  const supabaseUrl = import.meta.env.VITE_APP_SUPABASE_URL;
+  const supabaseKey = import.meta.env.VITE_APP_ANON_KEY;
+  const supabase: SupabaseClient = createClient(supabaseUrl, supabaseKey);
+
+  function listenToSignInEvent() {
+    supabase.auth.onAuthStateChange((event: any, session: any) => {
+      if (event === "SIGNED_IN") {
+        console.log("User signed in:", session.user);
+      }
+    });
+  }
 
   // // Call the function to start listening to the sign in event
-  // listenToSignInEvent();
-
-  // useEffect(() => {
-  //   const getUser = async () => {
-  //     const {
-  //       data: { session },
-  //     } = await supabase.auth.getSession();
-  //     if (!session) {
-  //       console.log("no session", session);
-  //     } else if (!session.user) {
-  //       console.log("no user", session.user);
-  //     } else {
-  //       setUser(session.user);
-  //     }
-  //   };
-
-  //   const { data: authListener } = supabase.auth.onAuthStateChanged(
-  //     (event: any, session: any) => {
-  //       if (event === "SIGNED_IN") {
-  //         console.log("User is signed in:", session.user);
-  //         getUser();
-  //       }
-  //     }
-  //   );
-
-  //   getUser();
-
-  //   return () => {
-  //     authListener?.unsubscribe();
-  //   };
-  // }, []);
+  listenToSignInEvent();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -78,6 +45,7 @@ const LoginPage: React.FC = () => {
         password,
       });
       if (error) {
+        setErrorMessage("Error signing in: " + error.message);
         throw error;
       }
 
@@ -87,6 +55,9 @@ const LoginPage: React.FC = () => {
         setLogin("Login Successful!");
         await new Promise((resolve) => setTimeout(resolve, 5000));
         navigate("/dashboard");
+      } else {
+        setErrorMessage(`Account not found. Register?`);
+        setLogin("Account not found");
       }
     } catch (err: any) {
       console.error(err);
@@ -134,16 +105,11 @@ const LoginPage: React.FC = () => {
             {/* Error Message */}
             {errorMessage && (
               <div className="text-sm text-red-500">
-                <p>
-                  Account not found.{" "}
-                  <Link to="/register" className="text-primaryBlue underline">
-                    Register ?
-                  </Link>{" "}
-                </p>
+                <p>{errorMessage}</p>
               </div>
             )}
 
-            {/* Email or Username */}
+            {/* Email*/}
             <div>
               <input
                 type="text"

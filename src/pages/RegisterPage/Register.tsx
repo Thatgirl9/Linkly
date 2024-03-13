@@ -66,6 +66,7 @@ const RegisterPage: React.FC = () => {
       }
 
       if (data) {
+        console.log(data);
         // Registration Successful, show success message
         setVerification("Account Created Successfully!");
         await new Promise((resolve) => setTimeout(resolve, 5000));
