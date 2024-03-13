@@ -1,8 +1,9 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import PasswordInput from "../../components/PasswordInput";
-import { auth, googleProvider } from "../../config/firebase.js";
-import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import supabase from "../../config/supabaseClient.js";
+// import { auth, googleProvider } from "../../config/firebase.js";
+// import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 
 import Line from "../../assets/LoginPage/Vector 8.svg";
 import GoogleIcon from "../../assets/LoginPage/logo_googleg_48dp.png";
@@ -46,45 +47,74 @@ const RegisterPage: React.FC = () => {
     form?.classList.remove("shadow-md", "shadow-primaryPink");
   };
 
-  const registerAuthentication = async () => {
+  // const registerAuthentication = async () => {
+  //   setIsLoading(true);
+  //   try {
+  //     const userCredential = await createUserWithEmailAndPassword(
+  //       auth,
+  //       email,
+  //       password
+  //     );
+  //     const user = userCredential.user;
+  //     // Wait for 10 seconds before sending the verification email
+  //     await new Promise((resolve) => setTimeout(resolve, 10000));
+  //     if (user) {
+  //       setVerification("Account Created Successfully!");
+  //       await new Promise((resolve) => setTimeout(resolve, 5000));
+  //       navigate("/login");
+  //     }
+  //   } catch (err: any) {
+  //     if (
+  //       err.code === "auth/email-already-in-use" ||
+  //       err.code === "auth/invalid-email"
+  //     ) {
+  //       setPassError("Email is already in use");
+  //       setPassError("Invalid Email");
+  //     } else {
+  //       setPassError("");
+  //       console.error(err.code);
+  //       console.error(err.message);
+  //     }
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
+
+  // const logInGoogle = async () => {
+  //   try {
+  //     await signInWithPopup(auth, googleProvider);
+  //     navigate("/dashboard");
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // };
+
+  // SUPABASE
+  const registerAuthentication = async (e: React.FormEvent) => {
+    e.preventDefault();
     setIsLoading(true);
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
+      const { data, error } = await supabase.auth.signUp({
         email,
-        password
-      );
-      const user = userCredential.user;
-      // Wait for 10 seconds before sending the verification email
-      await new Promise((resolve) => setTimeout(resolve, 10000));
-      if (user) {
+        password,
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      if (data) {
+        // Registration Successful, show success message
         setVerification("Account Created Successfully!");
         await new Promise((resolve) => setTimeout(resolve, 5000));
         navigate("/login");
       }
     } catch (err: any) {
-      if (
-        err.code === "auth/email-already-in-use" ||
-        err.code === "auth/invalid-email"
-      ) {
-        setPassError("Email is already in use");
-        setPassError("Invalid Email");
-      } else {
-        setPassError("");
-        console.error(err.code);
-        console.error(err.message);
-      }
+      // Registration failed, show error message
+      console.error(err);
+      setPassError(err.message);
     } finally {
       setIsLoading(false);
-    }
-  };
-
-  const logInGoogle = async () => {
-    try {
-      await signInWithPopup(auth, googleProvider);
-      navigate("/dashboard");
-    } catch (err) {
-      console.error(err);
     }
   };
 
@@ -157,7 +187,7 @@ const RegisterPage: React.FC = () => {
       >
         <form
           className="flex flex-col gap-[1.6em] w-[90%]"
-          onSubmit={(e) => e.preventDefault()}
+          onSubmit={registerAuthentication}
         >
           <div className="text-center">
             <h1 className="text-4xl font-semibold pb-3 ">
@@ -243,7 +273,6 @@ const RegisterPage: React.FC = () => {
             <div className="mt-5 flex justify-center items-center w-full">
               <button
                 className="p-2 w-full bg-primaryBlue rounded-lg font-semibold shadow-inner shadow-primaryBlue"
-                onClick={registerAuthentication}
                 type="submit"
               >
                 Register
@@ -282,7 +311,7 @@ const RegisterPage: React.FC = () => {
           <div className="flex items-center justify-center gap-3 pt-[1em]">
             <button
               className="flex items-center justify-center gap-2 border border-primaryBlue bg-primaryBlack p-1 px-2 rounded-md "
-              onClick={logInGoogle}
+              // onClick={logInGoogle}
             >
               <span>
                 <img

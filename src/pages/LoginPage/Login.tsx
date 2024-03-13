@@ -1,20 +1,21 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link, useNavigate } from "react-router-dom";
 import PasswordInput from "../../components/PasswordInput";
+import supabase from "../../config/supabaseClient.js";
 // import { auth, googleProvider } from "../../config/";
-import { auth, googleProvider } from "../../config/firebase.js";
-import {
-  signInWithEmailAndPassword,
-  signInWithPopup,
-  onAuthStateChanged,
-  // sendPasswordResetEmail,
-} from "firebase/auth";
+// import { auth, googleProvider } from "../../config/firebase.js";
+// import {
+//   signInWithEmailAndPassword,
+//   signInWithPopup,
+//   onAuthStateChanged,
+//   // sendPasswordResetEmail,
+// } from "firebase/auth";
 
 import Line from "../../assets/LoginPage/Vector 8.svg";
 import GoogleIcon from "../../assets/LoginPage/logo_googleg_48dp.png";
 import AppleLogo from "../../assets/LoginPage/Path.svg";
 import "./login.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const LoginPage: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -27,55 +28,78 @@ const LoginPage: React.FC = () => {
 
   console.log(user);
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        setUser(user);
-        // navigate("/dashboard");
-      } else {
-        setUser(null);
-      }
-    });
+  // useEffect(() => {
+  //   const unsubscribe = onAuthStateChanged(auth, (user) => {
+  //     if (user) {
+  //       setUser(user);
+  //       // navigate("/dashboard");
+  //     } else {
+  //       setUser(null);
+  //     }
+  //   });
 
-    return () => {
-      unsubscribe();
-    };
-  }, [navigate, setUser]);
+  //   return () => {
+  //     unsubscribe();
+  //   };
+  // }, [navigate, setUser]);
 
-  const logIn = async () => {
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+
     try {
-      const userCredential = await signInWithEmailAndPassword(
-        auth,
+      const { data, error } = await supabase.auth.signInWithPassword({
         email,
-        password
-      );
-      const user = userCredential.user;
-      setUser(user);
+        password,
+      });
+      if (error) {
+        throw error;
+      }
 
-      setLogin("Login Successful!");
-      await new Promise((resolve) => setTimeout(resolve, 5000));
-      navigate("/dashboard");
+      if (data) {
+        setLogin("Login Successful!");
+        await new Promise((resolve) => setTimeout(resolve, 5000));
+        navigate("/dashboard");
+      }
     } catch (err: any) {
       console.error(err);
-      setErrorMessage(err.code);
-
-      // if ((err as Error).code === "auth/invalid-credential") {
-
-      //   navigate("/register");
-      // } else {
-      //   console.log(err.message);
-      // }
+      setErrorMessage(err.message);
     }
   };
 
-  const logInGoogle = async () => {
-    try {
-      await signInWithPopup(auth, googleProvider);
-      navigate("/dashboard");
-    } catch (err) {
-      console.error(err);
-    }
-  };
+  // const logIn = async () => {
+  //   try {
+  //     const userCredential = await signInWithEmailAndPassword(
+  //       auth,
+  //       email,
+  //       password
+  //     );
+  //     const user = userCredential.user;
+  //     setUser(user);
+
+  //     setLogin("Login Successful!");
+  //     await new Promise((resolve) => setTimeout(resolve, 5000));
+  //     navigate("/dashboard");
+  //   } catch (err: any) {
+  //     console.error(err);
+  //     setErrorMessage(err.code);
+
+  //     // if ((err as Error).code === "auth/invalid-credential") {
+
+  //     //   navigate("/register");
+  //     // } else {
+  //     //   console.log(err.message);
+  //     // }
+  //   }
+  // };
+
+  // const logInGoogle = async () => {
+  //   try {
+  //     await signInWithPopup(auth, googleProvider);
+  //     navigate("/dashboard");
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // };
 
   const handleMouseOver = () => {
     const form = document.querySelector(".form-div");
@@ -102,7 +126,7 @@ const LoginPage: React.FC = () => {
       >
         <form
           className="flex flex-col gap-[1.6em] w-[90%]"
-          onSubmit={(e) => e.preventDefault()}
+          onSubmit={handleLogin}
         >
           <div>
             <h1 className="text-4xl font-semibold pb-3 text-center">
@@ -130,7 +154,7 @@ const LoginPage: React.FC = () => {
             <div>
               <input
                 type="text"
-                placeholder="Email address or username"
+                placeholder="Email address"
                 required
                 pattern="^([a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$) | ([a-zA-Z]+$)"
                 className="py-3 px-4 w-full rounded-lg focus:outline-none bg-primaryBlack border-primaryPink focus:border-b-2 "
@@ -158,8 +182,9 @@ const LoginPage: React.FC = () => {
 
             <div className="mt-5 flex justify-center items-center w-full">
               <button
+                type="submit"
                 className="p-2 w-full bg-primaryBlue rounded-lg font-semibold shadow-inner shadow-primaryBlue"
-                onClick={logIn}
+                // onClick={logIn}
               >
                 Login
               </button>
@@ -195,7 +220,7 @@ const LoginPage: React.FC = () => {
           <div className="flex items-center justify-center gap-3 pt-[1em]">
             <button
               className="flex items-center justify-center gap-2 border border-primaryBlue bg-primaryBlack p-1 px-2 rounded-md "
-              onClick={logInGoogle}
+              // onClick={logInGoogle}
             >
               <span>
                 <img
