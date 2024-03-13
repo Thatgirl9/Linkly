@@ -28,7 +28,6 @@ const RegisterPage: React.FC = () => {
   const [passwordConfirmError, setPasswordConfirmError] = useState("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [verification, setVerification] = useState("");
-  // const [verifiedEmail, setVerifiedEmail] = useState("");
 
   // Scrolling Solution
   useEffect(() => {
@@ -46,48 +45,6 @@ const RegisterPage: React.FC = () => {
     const form = document.querySelector(".form-div");
     form?.classList.remove("shadow-md", "shadow-primaryPink");
   };
-
-  // const registerAuthentication = async () => {
-  //   setIsLoading(true);
-  //   try {
-  //     const userCredential = await createUserWithEmailAndPassword(
-  //       auth,
-  //       email,
-  //       password
-  //     );
-  //     const user = userCredential.user;
-  //     // Wait for 10 seconds before sending the verification email
-  //     await new Promise((resolve) => setTimeout(resolve, 10000));
-  //     if (user) {
-  //       setVerification("Account Created Successfully!");
-  //       await new Promise((resolve) => setTimeout(resolve, 5000));
-  //       navigate("/login");
-  //     }
-  //   } catch (err: any) {
-  //     if (
-  //       err.code === "auth/email-already-in-use" ||
-  //       err.code === "auth/invalid-email"
-  //     ) {
-  //       setPassError("Email is already in use");
-  //       setPassError("Invalid Email");
-  //     } else {
-  //       setPassError("");
-  //       console.error(err.code);
-  //       console.error(err.message);
-  //     }
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
-
-  // const logInGoogle = async () => {
-  //   try {
-  //     await signInWithPopup(auth, googleProvider);
-  //     navigate("/dashboard");
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // };
 
   // SUPABASE
   const registerAuthentication = async (e: React.FormEvent) => {

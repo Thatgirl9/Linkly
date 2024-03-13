@@ -26,22 +26,48 @@ const LoginPage: React.FC = () => {
 
   const navigate = useNavigate();
 
-  console.log(user);
+  // console.log(user);
 
-  // useEffect(() => {
-  //   const unsubscribe = onAuthStateChanged(auth, (user) => {
-  //     if (user) {
-  //       setUser(user);
-  //       // navigate("/dashboard");
-  //     } else {
-  //       setUser(null);
+  // function listenToSignInEvent() {
+  //   supabase.auth.onAuthStateChanged((event: any, session: any) => {
+  //     if (event === "SIGNED_IN") {
+  //       console.log("User signed in:", session.user);
   //     }
   //   });
+  // }
+
+  // // Call the function to start listening to the sign in event
+  // listenToSignInEvent();
+
+  // useEffect(() => {
+  //   const getUser = async () => {
+  //     const {
+  //       data: { session },
+  //     } = await supabase.auth.getSession();
+  //     if (!session) {
+  //       console.log("no session", session);
+  //     } else if (!session.user) {
+  //       console.log("no user", session.user);
+  //     } else {
+  //       setUser(session.user);
+  //     }
+  //   };
+
+  //   const { data: authListener } = supabase.auth.onAuthStateChanged(
+  //     (event: any, session: any) => {
+  //       if (event === "SIGNED_IN") {
+  //         console.log("User is signed in:", session.user);
+  //         getUser();
+  //       }
+  //     }
+  //   );
+
+  //   getUser();
 
   //   return () => {
-  //     unsubscribe();
+  //     authListener?.unsubscribe();
   //   };
-  // }, [navigate, setUser]);
+  // }, []);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -56,6 +82,8 @@ const LoginPage: React.FC = () => {
       }
 
       if (data) {
+        console.log(data);
+        setUser(data.user);
         setLogin("Login Successful!");
         await new Promise((resolve) => setTimeout(resolve, 5000));
         navigate("/dashboard");
@@ -65,41 +93,6 @@ const LoginPage: React.FC = () => {
       setErrorMessage(err.message);
     }
   };
-
-  // const logIn = async () => {
-  //   try {
-  //     const userCredential = await signInWithEmailAndPassword(
-  //       auth,
-  //       email,
-  //       password
-  //     );
-  //     const user = userCredential.user;
-  //     setUser(user);
-
-  //     setLogin("Login Successful!");
-  //     await new Promise((resolve) => setTimeout(resolve, 5000));
-  //     navigate("/dashboard");
-  //   } catch (err: any) {
-  //     console.error(err);
-  //     setErrorMessage(err.code);
-
-  //     // if ((err as Error).code === "auth/invalid-credential") {
-
-  //     //   navigate("/register");
-  //     // } else {
-  //     //   console.log(err.message);
-  //     // }
-  //   }
-  // };
-
-  // const logInGoogle = async () => {
-  //   try {
-  //     await signInWithPopup(auth, googleProvider);
-  //     navigate("/dashboard");
-  //   } catch (err) {
-  //     console.error(err);
-  //   }
-  // };
 
   const handleMouseOver = () => {
     const form = document.querySelector(".form-div");
@@ -118,7 +111,7 @@ const LoginPage: React.FC = () => {
   };
 
   return (
-    <section className="bg-primaryGrey  md:h-screen lg:h-fit pb-[5em] flex justify-center items-center ">
+    <section className="bg-primaryGrey h-[100dvh] md:h-screen lg:h-fit pb-[5em] flex justify-center items-center ">
       <div
         className="form-div border border-primaryBlue p-5 rounded-lg flex flex-col gap-[1.6em] w-[90%]  justify-center items-center sm:w-[24em] lg:w-[22em] mt-[4em]"
         onMouseOver={handleMouseOver}
