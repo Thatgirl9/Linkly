@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link, useNavigate } from "react-router-dom";
 import PasswordInput from "../../components/PasswordInput";
-// import supabase from "../../config/supabaseClient.js";
-import { createClient, SupabaseClient } from "@supabase/supabase-js";
+import { supabase } from "../../config/supabaseClient.js";
+// import { createClient, SupabaseClient } from "@supabase/supabase-js";
 
 import Line from "../../assets/LoginPage/Vector 8.svg";
 import GoogleIcon from "../../assets/LoginPage/logo_googleg_48dp.png";
@@ -21,9 +21,9 @@ const LoginPage: React.FC = () => {
 
   console.log(user);
 
-  const supabaseUrl = import.meta.env.VITE_APP_SUPABASE_URL;
-  const supabaseKey = import.meta.env.VITE_APP_ANON_KEY;
-  const supabase: SupabaseClient = createClient(supabaseUrl, supabaseKey);
+  // const supabaseUrl = import.meta.env.VITE_APP_SUPABASE_URL;
+  // const supabaseKey = import.meta.env.VITE_APP_ANON_KEY;
+  // const supabase: SupabaseClient = createClient(supabaseUrl, supabaseKey);
 
   function listenToSignInEvent() {
     supabase.auth.onAuthStateChange((event: any, session: any) => {
