@@ -260,9 +260,8 @@ const DashboardPage: React.FC = () => {
       console.log(updatedLink);
 
       try {
-        const apiToken = import.meta.env.VITE_APP_API_TOKEN;
         const response = await fetch(
-          `https://api.tinyurl.com/create?api_token=${apiToken}`,
+          "https://api.tinyurl.com/create?api_token=sX9Z93j8f6BRAy10xkh4esULwnyvDrUO5LaMgmLjGFLKSiMJenrmFsmiv0jD",
           {
             method: "POST",
             headers: {
@@ -524,7 +523,7 @@ const DashboardPage: React.FC = () => {
         {shortUrl && <ShortLink url={shortUrl} qrCode={qrCode} />}
       </div>
 
-      <div className="overflow-x-auto flex justify-center items-center mt-16 pb-14 p-10 bg-primaryGrey bg-opacity-80">
+      <div className="overflow-x-auto lg:flex lg:justify-center lg:items-center mt-16 pb-14 p-10 bg-primaryGrey bg-opacity-80 table-container">
         {tabledData && (
           <table className="table-fixed border-collapse shadow-2xl shadow-primaryBlack">
             <thead className="">
