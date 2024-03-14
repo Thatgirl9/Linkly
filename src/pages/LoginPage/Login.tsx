@@ -4,9 +4,9 @@ import PasswordInput from "../../components/PasswordInput";
 import { supabase } from "../../config/supabaseClient.js";
 // import { createClient, SupabaseClient } from "@supabase/supabase-js";
 
-import Line from "../../assets/LoginPage/Vector 8.svg";
-import GoogleIcon from "../../assets/LoginPage/logo_googleg_48dp.png";
-import AppleLogo from "../../assets/LoginPage/Path.svg";
+// import Line from "../../assets/LoginPage/Vector 8.svg";
+// import GoogleIcon from "../../assets/LoginPage/logo_googleg_48dp.png";
+// import AppleLogo from "../../assets/LoginPage/Path.svg";
 import "./login.css";
 import { useState } from "react";
 
@@ -20,10 +20,6 @@ const LoginPage: React.FC = () => {
   const navigate = useNavigate();
 
   console.log(user);
-
-  // const supabaseUrl = import.meta.env.VITE_APP_SUPABASE_URL;
-  // const supabaseKey = import.meta.env.VITE_APP_ANON_KEY;
-  // const supabase: SupabaseClient = createClient(supabaseUrl, supabaseKey);
 
   function listenToSignInEvent() {
     supabase.auth.onAuthStateChange((event: any, session: any) => {
@@ -54,7 +50,7 @@ const LoginPage: React.FC = () => {
         setUser(data.user);
         setLogin("Login Successful!");
         await new Promise((resolve) => setTimeout(resolve, 5000));
-        navigate("/dashboard");
+        navigate(`/dashboard/${email}`);
       } else {
         setErrorMessage(`Account not found. Register?`);
         setLogin("Account not found");
@@ -80,6 +76,18 @@ const LoginPage: React.FC = () => {
     setPassword(value);
     console.log(value, "Checking password");
   };
+
+  // const logInGoogle = async () => {
+  //   const { data, error } = await supabase.auth.signInWithOAuth({
+  //     provider: "google",
+  //   });
+
+  //   if (error) {
+  //     console.error("Error signing in with Google:", error);
+  //   } else {
+  //     console.log("Signed in with Google:", data);
+  //   }
+  // };
 
   return (
     <section className="bg-primaryGrey h-[100dvh] md:h-screen lg:h-fit pb-[5em] flex justify-center items-center ">
@@ -163,7 +171,7 @@ const LoginPage: React.FC = () => {
           </div>
         </form>
 
-        <div className="pt-[1em]">
+        {/* <div className="pt-[1em]">
           <div>
             <p className="flex items-center justify-center w-full gap-4 font-semibold">
               <span>
@@ -179,7 +187,7 @@ const LoginPage: React.FC = () => {
           <div className="flex items-center justify-center gap-3 pt-[1em]">
             <button
               className="flex items-center justify-center gap-2 border border-primaryBlue bg-primaryBlack p-1 px-2 rounded-md "
-              // onClick={logInGoogle}
+              onClick={logInGoogle}
             >
               <span>
                 <img
@@ -203,7 +211,7 @@ const LoginPage: React.FC = () => {
               Apple
             </button>
           </div>
-        </div>
+            </div> */}
       </div>
     </section>
   );

@@ -1,18 +1,11 @@
-import { HotTable } from "@handsontable/react";
-import { registerAllModules } from "handsontable/registry";
-import "handsontable/dist/handsontable.full.min.css";
 import "./dashboard.css";
 import Icon from "../../assets/Group 18.png";
 import Form from "../../components/FormUrl";
 import Spinner from "../../components/Spinner";
 import ShortLink from "../../components/ShortenedLink";
 import { useEffect, useState } from "react";
-import { signOut } from "firebase/auth";
-import { auth } from "../../config/firebase.js";
-import { useNavigate } from "react-router-dom";
-
-// register Handsontable's modules
-registerAllModules();
+import { useNavigate, useParams } from "react-router-dom";
+import { supabase } from "../../config/supabaseClient.js";
 
 const DashboardPage: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -24,6 +17,8 @@ const DashboardPage: React.FC = () => {
   const [shortUrl, setShortUrl] = useState("");
   const [qrCode, setQrCode] = useState("");
   const navigate = useNavigate();
+  const { email } = useParams();
+  const [tabledData, setTabledData] = useState<any>([]);
 
   const handleClick = () => {
     if (notification) {
@@ -60,12 +55,6 @@ const DashboardPage: React.FC = () => {
     }
   };
 
-  // const handleOutsideClick = (e: MouseEvent) => {
-  //   if (e.target.id === "dropdown-button" || e.target.id === "dropdown") {
-  //     setIsOpen(false);
-  //   }
-  // };
-
   useEffect(() => {
     document.addEventListener("click", handleOutsideClick);
     return () => {
@@ -75,36 +64,210 @@ const DashboardPage: React.FC = () => {
 
   const logOut = async () => {
     try {
-      await signOut(auth);
+      const { error } = await supabase.auth.signOut();
+      if (error) throw error;
       await new Promise((resolve) => setTimeout(resolve, 5000));
+
       navigate("/");
     } catch (err) {
       console.error(err);
     }
   };
 
+  const handleInputFocus = () => {
+    setInValidLink(false);
+  };
+
+  // useEffect(() => {
+  //   console.log(shortUrl, "UseEffect");
+  // }, [shortUrl]);
+
+  // const dashboardFormSubmit = async (longUrl: string) => {
+  //   setIsLoading(true);
+
+  //   const linkValid =
+  //     longUrl.startsWith("http://") || longUrl.startsWith("https://");
+
+  //   const updateLinkValid = linkValid ? longUrl : `https://${longUrl}`;
+
+  //   const timestamp = new Date();
+
+  //   const {
+  //     data: { user },
+  //   } = await supabase.auth.getUser();
+  //   // Insert the data into the database
+  //   console.log(user);
+  //   console.log(user.email);
+  //   console.log(user.id);
+  //   console.log(user.aud);
+  //   console.log(user.role);
+  //   const url = shortUrl;
+
+  //   console.log(url);
+
+  //   const sendShortUrlToApi = async (shortUrl: string) => {
+  //     try {
+  //       console.log("Sending short URL to API:", shortUrl);
+  //       const { data, error } = await supabase
+  //         .from("linkly-url")
+  //         .insert([
+  //           {
+  //             name: user.email,
+  //             original_link: longUrl,
+  //             shortened_url: shortUrl,
+  //             created_at: timestamp,
+  //             created_at_date: timestamp,
+  //             user_id: user?.id || "null",
+  //             is_authenticated: user?.role === "authenticated" ? true : false,
+  //             status: true,
+  //             clicks: 1,
+  //           },
+  //         ])
+  //         .single();
+
+  //       console.log(url);
+  //       if (error) {
+  //         console.error(error);
+  //       }
+
+  //       if (data) {
+  //         console.log(data);
+  //       }
+  //     } catch (error) {
+  //       console.error("Error sending short URL to API:", error);
+  //     }
+  //   };
+
+  //   if (!/^[0-9]+$/.test(longUrl)) {
+  //     setInValidLink(false);
+  //     console.log(updateLinkValid);
+  //     try {
+  //       const response = await fetch(
+  //         "https://api.tinyurl.com/create?api_token=sX9Z93j8f6BRAy10xkh4esULwnyvDrUO5LaMgmLjGFLKSiMJenrmFsmiv0jD",
+  //         {
+  //           method: "POST",
+  //           headers: {
+  //             // Authorization: `Bearer ${apiToken}`,
+  //             "Content-Type": "application/json",
+  //           },
+  //           body: JSON.stringify({
+  //             url: updateLinkValid,
+  //             domain: "tinyurl.com",
+  //             description: "string",
+  //             // group_guid: groupGuid,
+  //           }),
+  //         }
+  //       );
+
+  //       if (response.ok) {
+  //         const data = await response.json();
+  //         console.log(data);
+  //         const result = data?.data?.tiny_url;
+  //         console.log(result, "result");
+  //         setShortUrl(result);
+
+  //         await sendShortUrlToApi(result);
+  //         // setShortUrl(data.data.tiny_url);
+
+  //         // setShortUrl(result);
+  //         console.log("Shorturl", shortUrl);
+
+  //         const qrCode = data.data.tiny_url;
+  //         console.log(qrCode);
+  //         setQrCode(qrCode);
+  //       } else {
+  //         console.error("Error", response.statusText);
+  //       }
+  //     } catch (err: any) {
+  //       console.error(err.message);
+  //       setErrorMessage(err.message);
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   } else {
+  //     setInValidLink(true);
+  //     setIsLoading(false);
+  //   }
+
+  //   // const fetchDataFromTable = async () => {
+  //   const { data, error } = await supabase
+  //     .from("linkly-url")
+  //     .select()
+  //     .eq("user_id", user?.id);
+  //   // .single();
+
+  //   if (error) {
+  //     console.error(error);
+  //   }
+
+  //   if (data) {
+  //     console.log(data);
+  //     setTabledData(data);
+  //   }
+  //   // };
+  // };
+
+  const getUserData = async () => {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (user) {
+      const { data, error } = await supabase
+        .from("linkly-url")
+        .select()
+        .eq("user_id", user.id);
+
+      if (error) {
+        console.error(error, "Error");
+      } else {
+        setTabledData(data || []);
+      }
+    }
+  };
+
+  useEffect(() => {
+    getUserData();
+  }, []);
+
   const dashboardFormSubmit = async (longUrl: string) => {
     setIsLoading(true);
 
     const linkValid =
       longUrl.startsWith("http://") || longUrl.startsWith("https://");
+    const updatedLink = linkValid ? longUrl : `https://${longUrl}`;
+    const timestamp = new Date();
+    const timestamps = new Date();
+    const formattedDate = timestamps.toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "2-digit",
+      year: "numeric",
+    });
 
-    const updateLinkValid = linkValid ? longUrl : `https://${longUrl}`;
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      setIsLoading(false);
+      return;
+    }
+
+    console.log(user);
 
     if (!/^[0-9]+$/.test(longUrl)) {
       setInValidLink(false);
-      console.log(updateLinkValid);
+      console.log(updatedLink);
       try {
         const response = await fetch(
           "https://api.tinyurl.com/create?api_token=sX9Z93j8f6BRAy10xkh4esULwnyvDrUO5LaMgmLjGFLKSiMJenrmFsmiv0jD",
           {
             method: "POST",
             headers: {
-              // Authorization: `Bearer ${apiToken}`,
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              url: updateLinkValid,
+              url: updatedLink,
               domain: "tinyurl.com",
               description: "string",
               // group_guid: groupGuid,
@@ -115,15 +278,32 @@ const DashboardPage: React.FC = () => {
         if (response.ok) {
           const data = await response.json();
           console.log(data);
-          const result = data.data.tiny_url;
-          console.log(result);
-          setShortUrl(result);
-          // setShortUrl(data.data.tiny_url.shortUrl);
+          const result = data?.data?.tiny_url;
           const qrCode = data.data.tiny_url;
-          console.log(qrCode);
+          console.log(result, "result");
+
+          await supabase.from("linkly-url").insert([
+            {
+              name: user.email,
+              original_link: longUrl,
+              shortened_url: result,
+              created_at: timestamp,
+              created_at_date: formattedDate,
+              user_id: user?.id || "null",
+              is_authenticated: user?.role === "authenticated" ? true : false,
+              status: result ? "Active" : "Inactive",
+              clicks: 1,
+            },
+          ]);
+
+          setShortUrl(result);
+          console.log("Shorturl", shortUrl);
+          console.log(qrCode, "qrcode");
           setQrCode(qrCode);
+          getUserData();
         } else {
           console.error("Error", response.statusText);
+          throw new Error("Failed to shorten URL");
         }
       } catch (err: any) {
         console.error(err.message);
@@ -135,10 +315,6 @@ const DashboardPage: React.FC = () => {
       setInValidLink(true);
       setIsLoading(false);
     }
-  };
-
-  const handleInputFocus = () => {
-    setInValidLink(false);
   };
 
   return (
@@ -164,12 +340,14 @@ const DashboardPage: React.FC = () => {
                 </button>
                 {/* Profile Dropdown */}
                 {profile && (
-                  <div className="absolute top-14 right-0" id="dropdown">
+                  <div className="absolute top-12 -right-12" id="dropdown">
                     <button
                       className="border-2 border-stroke bg-primaryGrey p-2 rounded-full flex items-center"
                       id="dropdown-button"
                     >
-                      <span className="w-[18ch]">Welcome Mohammed</span>
+                      <span className="w-[16.6em] px-1 break-words">
+                        Welcome {email}
+                      </span>
                       <span
                         onClick={handleClick}
                         className={` ${isOpen ? "rotate-180" : "rotate-0"}`}
@@ -184,7 +362,7 @@ const DashboardPage: React.FC = () => {
                       </span>
                     </button>
                     {isOpen && (
-                      <div className="absolute top-14 right-0 bg-primaryPink w-[6em]  shadow-md rounded-md ">
+                      <div className="absolute top-19 right-0 bg-primaryPink w-[6em]  shadow-md rounded-md ">
                         {/* <ul className="list-none "> */}
                         <button className="flex gap-2 px-2 py-1 h-full w-[6em]">
                           <span>Logout</span>
@@ -250,7 +428,7 @@ const DashboardPage: React.FC = () => {
               }}
             />
             <div className="block lg:hidden">
-              <p className="text-red-500">
+              <p className="text-red-500 text-center mb-3">
                 {invalidLink ? "Invalid Link" : ""}
               </p>
               {errorMessage && <p className="text-red-500">{errorMessage}</p>}
@@ -267,7 +445,7 @@ const DashboardPage: React.FC = () => {
                 className="border-2 border-stroke bg-primaryGrey p-2 rounded-full flex items-center"
                 id="dropdown-button"
               >
-                <span className="w-[20ch]">Welcome Mohammed</span>
+                <span className="w-[15em] break-words">Welcome {email}</span>
                 <span
                   onClick={handleClick}
                   className={` ${isOpen ? "rotate-180" : "rotate-0"}`}
@@ -282,7 +460,7 @@ const DashboardPage: React.FC = () => {
                 </span>
               </button>
               {isOpen && (
-                <div className="absolute top-14 right-0 bg-primaryPink w-[6em]  shadow-md rounded-md ">
+                <div className="absolute top-19 right-0 bg-primaryPink w-[6em]  shadow-md rounded-md ">
                   {/* <ul className="list-none "> */}
                   <button
                     className="flex gap-2 px-2 py-1 h-full w-[6em] items-center"
@@ -336,35 +514,68 @@ const DashboardPage: React.FC = () => {
 
       {/* Result form  search bar- laptop */}
       <div className="hidden lg:block">
-        <p className="text-red-500">{invalidLink ? "Invalid Link" : ""}</p>
+        <p className="text-red-500 text-center mb-4">
+          {invalidLink ? "Invalid Link" : ""}
+        </p>
         <Spinner isLoading={isLoading} />
 
         {shortUrl && <ShortLink url={shortUrl} qrCode={qrCode} />}
       </div>
 
-      <div className="bg-stroke opacity-25 h-[50vh]">
-        <HotTable
-          data={[
-            ["Short Link", "Original Link", "QRCode", "Toyota", "Ford"],
-            ["2019", 10, 11, 12, 13],
-            ["2020", 20, 11, 14, 13],
-            ["2021", 30, 15, 12, 13],
-          ]}
-          rowHeaders={true}
-          colHeaders={true}
-          height="auto"
-          autoWrapRow={true}
-          autoWrapCol={true}
-          licenseKey="non-commercial-and-evaluation" // for non-commercial use only
-        />
-      </div>
+      <div className="overflow-x-auto flex justify-center items-center mt-16 pb-14 p-10 bg-primaryGrey bg-opacity-80">
+        {tabledData && (
+          <table className="table-fixed border-collapse shadow-2xl shadow-primaryBlack">
+            <thead className="">
+              <tr className="bg-primaryBlack shadow-2xl shadow-stroke">
+                <th scope="col">Original Link</th>
+                <th scope="col">Shortened Link</th>
+                <th scope="col">Created At</th>
+                <th scope="col">Status</th>
+                <th scope="col">Clicks</th>
+                {/* <th scope="col">Action</th> */}
+              </tr>
+            </thead>
 
-      <div className="">
-        <div className="">
-          <h2 className="text-white">Wassuppp</h2>
-          <h3>Under construction</h3>
-          <h1>I don't even know what's going on again, nawa oh</h1>
-        </div>
+            <tbody>
+              {tabledData.map((data: any) => {
+                return (
+                  <tr key={data.id} className="bg-primaryGrey">
+                    <td>{data.original_link}</td>
+                    <td>{data.shortened_url}</td>
+                    <td>{data.created_at_date}</td>
+                    <td>{data.status}</td>
+                    <td>{data.clicks}</td>
+                    {/* <td className="flex border-none justify-center">
+                      <button className="text-2xl">
+                        <ion-icon name="trash-outline"></ion-icon>
+                      </button>
+                    </td> */}
+                  </tr>
+                );
+              })}
+            </tbody>
+
+            {/* {tabledData &&
+              tabledData.map((data: any) => {
+                return (
+                  <tbody key={data.id}>
+                    <tr className="">
+                      {/* <table> */}
+
+            {/* <tr> */}
+            {/* <td>{data.original_link}</td>
+                      <td>{data.shortened_url}</td>
+                      <td>{data.created_at_date}</td>
+                      <td>{data.status}</td>
+                      <td>{data.clicks}</td> */}
+            {/* </tr> */}
+            {/* </table> */}
+            {/* </tr>
+                  </tbody>
+                );
+              })} */}
+          </table>
+        )}
       </div>
     </section>
   );

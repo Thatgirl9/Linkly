@@ -6,9 +6,9 @@ import { supabase } from "../../config/supabaseClient.js";
 // import { auth, googleProvider } from "../../config/firebase.js";
 // import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 
-import Line from "../../assets/LoginPage/Vector 8.svg";
-import GoogleIcon from "../../assets/LoginPage/logo_googleg_48dp.png";
-import AppleLogo from "../../assets/LoginPage/Path.svg";
+// import Line from "../../assets/LoginPage/Vector 8.svg";
+// import GoogleIcon from "../../assets/LoginPage/logo_googleg_48dp.png";
+// import AppleLogo from "../../assets/LoginPage/Path.svg";
 import "./register.css";
 import Spinner from "../../components/Spinner.js";
 
@@ -259,7 +259,7 @@ const RegisterPage: React.FC = () => {
           </div>
         </form>
 
-        <div className="pt-[1em]">
+        {/* <div className="pt-[1em]">
           <div>
             <p className="flex items-center justify-center w-full gap-4 font-semibold">
               <span>
@@ -299,7 +299,7 @@ const RegisterPage: React.FC = () => {
               Apple
             </button>
           </div>
-        </div>
+        </div> */}
 
         <div className="text-center w-[90%] text-primaryLite">
           <p className="text-xs">

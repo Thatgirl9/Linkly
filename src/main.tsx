@@ -29,7 +29,7 @@ const router = createBrowserRouter([
     element: <RegisterPage />,
   },
   {
-    path: "/dashboard",
+    path: "/dashboard/:email",
     element: (
       // (
       // <AuthRoute>
