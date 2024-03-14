@@ -237,12 +237,12 @@ const DashboardPage: React.FC = () => {
       longUrl.startsWith("http://") || longUrl.startsWith("https://");
     const updatedLink = linkValid ? longUrl : `https://${longUrl}`;
     const timestamp = new Date();
-    const timestamps = new Date();
-    const formattedDate = timestamps.toLocaleDateString("en-GB", {
-      day: "2-digit",
-      month: "2-digit",
-      year: "numeric",
-    });
+    // const timestamps = new Date();
+    // const formattedDate = timestamps.toLocaleDateString("en-GB", {
+    //   day: "2-digit",
+    //   month: "2-digit",
+    //   year: "numeric",
+    // });
 
     const {
       data: { user },
@@ -258,9 +258,11 @@ const DashboardPage: React.FC = () => {
     if (!/^[0-9]+$/.test(longUrl)) {
       setInValidLink(false);
       console.log(updatedLink);
+
       try {
+        const apiToken = import.meta.env.VITE_APP_API_TOKEN;
         const response = await fetch(
-          "https://api.tinyurl.com/create?api_token=sX9Z93j8f6BRAy10xkh4esULwnyvDrUO5LaMgmLjGFLKSiMJenrmFsmiv0jD",
+          `https://api.tinyurl.com/create?api_token=${apiToken}`,
           {
             method: "POST",
             headers: {
@@ -288,7 +290,7 @@ const DashboardPage: React.FC = () => {
               original_link: longUrl,
               shortened_url: result,
               created_at: timestamp,
-              created_at_date: formattedDate,
+              created_at_date: timestamp,
               user_id: user?.id || "null",
               is_authenticated: user?.role === "authenticated" ? true : false,
               status: result ? "Active" : "Inactive",
