@@ -6,6 +6,7 @@ import ShortLink from "../../components/ShortenedLink";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { supabase } from "../../config/supabaseClient.js";
+import moment from "moment";
 
 const DashboardPage: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -543,7 +544,11 @@ const DashboardPage: React.FC = () => {
                   <tr key={data.id} className="bg-primaryGrey">
                     <td>{data.original_link}</td>
                     <td>{data.shortened_url}</td>
-                    <td>{data.created_at_date}</td>
+                    <td>
+                      {moment(data.created_at_date).format(
+                        "MMMM Do YYYY, h:mm:ss a"
+                      )}
+                    </td>
                     <td>{data.status}</td>
                     <td>{data.clicks}</td>
                     {/* <td className="flex border-none justify-center">
