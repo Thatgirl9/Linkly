@@ -14,7 +14,7 @@ import { Link } from "react-router-dom";
 // import QRCode from "qrcode.react";
 
 // import InputLink from "../../assets/link.png";
-import QuestionCircle from "../../assets/question-circle.png";
+// import QuestionCircle from "../../assets/question-circle.png";
 import LaptopTable from "../../assets/Frame 39.png";
 import MobileTable from "../../assets/Frame 39 (1).png";
 import Spinner from "../../components/Spinner";
@@ -26,58 +26,71 @@ const LandingPage: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [invalidLink, setInValidLink] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<null>(null);
+  const [count, setCount] = useState<number>(0);
+  const [countMessage, setCountMessage] = useState<boolean>(false);
   // const [copy, setCopy] = useState(false);
 
   const handleFormSubmit = async (longUrl: string) => {
     setIsLoading(true);
 
-    const linkValid =
-      longUrl.startsWith("http://") || longUrl.startsWith("https://");
+    // Check if the input is a valid URL
+    const linkValid = /^https?:\/\/[^\s/$.?#].[^\s]*$/.test(longUrl);
 
-    const updateLinkValid = linkValid ? longUrl : `https://${longUrl}`;
-
-    if (!/^[0-9]+$/.test(longUrl)) {
-      setInValidLink(false);
-      console.log(updateLinkValid);
-      try {
-        const response = await fetch(
-          "https://api.tinyurl.com/create?api_token=sX9Z93j8f6BRAy10xkh4esULwnyvDrUO5LaMgmLjGFLKSiMJenrmFsmiv0jD",
-          {
-            method: "POST",
-            headers: {
-              // Authorization: `Bearer ${apiToken}`,
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              url: updateLinkValid,
-              domain: "tinyurl.com",
-              description: "string",
-              // group_guid: groupGuid,
-            }),
-          }
-        );
-
-        if (response.ok) {
-          const data = await response.json();
-          console.log(data);
-          const result = data.data.tiny_url;
-          console.log(result);
-          setShortUrl(result);
-          // setShortUrl(data.data.tiny_url.shortUrl);
-          const qrCode = data.data.tiny_url;
-          console.log(qrCode);
-          setQrCode(qrCode);
-        } else {
-          console.error("Error", response.statusText);
-        }
-      } catch (err: any) {
-        console.error(err.message);
-        setErrorMessage(err.message);
-      } finally {
-        setIsLoading(false);
-      }
-    } else {
+    if (!linkValid) {
       setInValidLink(true);
+      setIsLoading(false);
+      return;
+    }
+
+    // Ensure the link has http:// or https:// prefix
+    const updateLinkValid =
+      longUrl.startsWith("http://") || longUrl.startsWith("https://")
+        ? longUrl
+        : `https://${longUrl}`;
+
+    setInValidLink(false);
+    console.log(updateLinkValid);
+
+    try {
+      const response = await fetch(
+        "https://api.tinyurl.com/create?api_token=sX9Z93j8f6BRAy10xkh4esULwnyvDrUO5LaMgmLjGFLKSiMJenrmFsmiv0jD",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            url: updateLinkValid,
+            domain: "tinyurl.com",
+            description: "string",
+          }),
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+        const result = data.data.tiny_url;
+        console.log(result);
+        setShortUrl(result);
+        const qrCode = data.data.tiny_url;
+        console.log(qrCode);
+        setQrCode(qrCode);
+
+        // Increment link count after successfully shortening a link
+        setCount((prevCount) => prevCount + 1);
+
+        // Check if the user has shortened two links, then show the popup
+        if (count + 1 >= 2) {
+          setCountMessage(true);
+        }
+      } else {
+        console.error("Error", response.statusText);
+      }
+    } catch (err: any) {
+      console.error(err.message);
+      setErrorMessage(err.message);
+    } finally {
       setIsLoading(false);
     }
   };
@@ -112,7 +125,9 @@ const LandingPage: React.FC = () => {
             onFocus={handleInputFocus}
             style={{ width: "90%", maxWidth: "30em" }}
           />
-          <p className="text-red-500">{invalidLink ? "Invalid Link" : ""}</p>
+          <p className="text-red-500">
+            {invalidLink ? "Please enter a valid link" : ""}
+          </p>
           {errorMessage && <p className="text-red-500">{errorMessage}</p>}
           <Spinner isLoading={isLoading} />
 
@@ -120,34 +135,25 @@ const LandingPage: React.FC = () => {
 
           {/* Toggle switch and Texts */}
           <div className="flex flex-col justify-center items-center text-primaryLite gap-[1.3em]">
-            {/* <div className="flex gap-4 items-center justify-center">
-              <ToggleSwitch onChange={handleToggle} onClick={copyToClipboard} />
-
-              <p className="text-base">Auto Paste from Clipboard </p>
-            </div> */}
-            <p className="text-sm flex justify-center items-center text-center gap-2 text-primaryLite">
-              <span>
-                You can create{" "}
+            {countMessage && (
+              <p className="text-sm flex justify-center items-center text-center gap-2 text-primaryLite">
+                <span>
+                  {/* You can create{" "}
                 <span className="text-primaryPink font-semibold">05</span> more
                 links.
-                <br className="md:hidden block"></br>{" "}
-                <Link
-                  to="/register"
-                  className="underline sm:no-underline font-semibold sm:font-normal cursor-pointer sm:hover:underline"
-                >
-                  Register Now
-                </Link>{" "}
-                to enjoy Unlimited usage
-              </span>
-
-              <span>
-                <img
-                  src={QuestionCircle}
-                  className="w-[1em] h-[1em] hidden md:block"
-                  alt="Question Mark in a Circle"
-                />
-              </span>
-            </p>
+                <br className="md:hidden block"></br>{" "} */}
+                  <Link
+                    to="/register"
+                    className="underline decoration-primaryBlue sm:no-underline font-semibold sm:font-normal cursor-pointer sm:hover:underline"
+                  >
+                    <span className="linkly-text font-semibold">
+                      Register Now
+                    </span>
+                  </Link>{" "}
+                  to enjoy Unlimited usage
+                </span>
+              </p>
+            )}
           </div>
 
           {/* Pictures */}

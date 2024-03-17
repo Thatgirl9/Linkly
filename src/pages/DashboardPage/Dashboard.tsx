@@ -234,16 +234,23 @@ const DashboardPage: React.FC = () => {
   const dashboardFormSubmit = async (longUrl: string) => {
     setIsLoading(true);
 
-    const linkValid =
-      longUrl.startsWith("http://") || longUrl.startsWith("https://");
-    const updatedLink = linkValid ? longUrl : `https://${longUrl}`;
+    const linkValid = /^https?:\/\/[^\s/$.?#].[^\s]*$/.test(longUrl);
+
+    if (!linkValid) {
+      setInValidLink(true);
+      setIsLoading(false);
+      return;
+    }
+
+    const updateLinkValid =
+      longUrl.startsWith("http://") || longUrl.startsWith("https://")
+        ? longUrl
+        : `https://${longUrl}`;
+
+    setInValidLink(false);
+    console.log(updateLinkValid);
+
     const timestamp = new Date();
-    // const timestamps = new Date();
-    // const formattedDate = timestamps.toLocaleDateString("en-GB", {
-    //   day: "2-digit",
-    //   month: "2-digit",
-    //   year: "numeric",
-    // });
 
     const {
       data: { user },
@@ -256,65 +263,57 @@ const DashboardPage: React.FC = () => {
 
     console.log(user);
 
-    if (!/^[0-9]+$/.test(longUrl)) {
-      setInValidLink(false);
-      console.log(updatedLink);
-
-      try {
-        const response = await fetch(
-          "https://api.tinyurl.com/create?api_token=sX9Z93j8f6BRAy10xkh4esULwnyvDrUO5LaMgmLjGFLKSiMJenrmFsmiv0jD",
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              url: updatedLink,
-              domain: "tinyurl.com",
-              description: "string",
-              // group_guid: groupGuid,
-            }),
-          }
-        );
-
-        if (response.ok) {
-          const data = await response.json();
-          console.log(data);
-          const result = data?.data?.tiny_url;
-          const qrCode = data.data.tiny_url;
-          console.log(result, "result");
-
-          await supabase.from("linkly-url").insert([
-            {
-              name: user.email,
-              original_link: longUrl,
-              shortened_url: result,
-              created_at: timestamp,
-              created_at_date: timestamp,
-              user_id: user?.id || "null",
-              is_authenticated: user?.role === "authenticated" ? true : false,
-              status: result ? "Active" : "Inactive",
-              clicks: 1,
-            },
-          ]);
-
-          setShortUrl(result);
-          console.log("Shorturl", shortUrl);
-          console.log(qrCode, "qrcode");
-          setQrCode(qrCode);
-          getUserData();
-        } else {
-          console.error("Error", response.statusText);
-          throw new Error("Failed to shorten URL");
+    try {
+      const response = await fetch(
+        "https://api.tinyurl.com/create?api_token=sX9Z93j8f6BRAy10xkh4esULwnyvDrUO5LaMgmLjGFLKSiMJenrmFsmiv0jD",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            url: updateLinkValid,
+            domain: "tinyurl.com",
+            description: "string",
+            // group_guid: groupGuid,
+          }),
         }
-      } catch (err: any) {
-        console.error(err.message);
-        setErrorMessage(err.message);
-      } finally {
-        setIsLoading(false);
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log(data);
+        const result = data?.data?.tiny_url;
+        const qrCode = data.data.tiny_url;
+        console.log(result, "result");
+
+        await supabase.from("linkly-url").insert([
+          {
+            name: user.email,
+            original_link: longUrl,
+            shortened_url: result,
+            created_at: timestamp,
+            created_at_date: timestamp,
+            user_id: user?.id || "null",
+            is_authenticated: user?.role === "authenticated" ? true : false,
+            status: result ? "Active" : "Inactive",
+            clicks: 1,
+          },
+        ]);
+
+        setShortUrl(result);
+        console.log("Shorturl", shortUrl);
+        console.log(qrCode, "qrcode");
+        setQrCode(qrCode);
+        getUserData();
+      } else {
+        console.error("Error", response.statusText);
+        throw new Error("Failed to shorten URL");
       }
-    } else {
-      setInValidLink(true);
+    } catch (err: any) {
+      console.error(err.message);
+      setErrorMessage(err.message);
+    } finally {
       setIsLoading(false);
     }
   };
@@ -431,7 +430,7 @@ const DashboardPage: React.FC = () => {
             />
             <div className="block lg:hidden">
               <p className="text-red-500 text-center mb-3">
-                {invalidLink ? "Invalid Link" : ""}
+                {invalidLink ? "Please enter a valid link" : ""}
               </p>
               {errorMessage && <p className="text-red-500">{errorMessage}</p>}
               <Spinner isLoading={isLoading} />
@@ -517,7 +516,7 @@ const DashboardPage: React.FC = () => {
       {/* Result form  search bar- laptop */}
       <div className="hidden lg:block">
         <p className="text-red-500 text-center mb-4">
-          {invalidLink ? "Invalid Link" : ""}
+          {invalidLink ? "Please enter a valid link" : ""}
         </p>
         <Spinner isLoading={isLoading} />
 
