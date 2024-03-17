@@ -70,3 +70,23 @@
     transform: scale(1) translate(-50%, -50%);
   }
 }
+
+.landing-page-div {
+  background-image: url(../src/assets/Group\ 17.png);
+  /* background-image: url(/linkly/public/Group\ 17.png); */
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-color: #0b101b;
+}
+
+@media screen and (max-width: 768px) {
+  :root {
+    background-image: none;
+  }
+
+  .landing-page-div {
+    background-image: url(../src/assets/Cubes.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+  }
+}
