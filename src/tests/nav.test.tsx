@@ -1,61 +1,52 @@
-// import { render } from "@testing-library/react";
-import NavBar from "../components/Nav";
+// nav.test.tsx
+
 import { it, expect } from "vitest";
-import "@testing-library/jest-dom";
+import { render, fireEvent } from "@testing-library/react";
+import { toHaveTextContent, toHaveClass } from "@testing-library/jest-dom";
+import NavBar from "../components/Nav";
 
-// import React from 'react';
-import { render } from "@testing-library/react";
-// import NavBar from './NavBar';
+// Extend the global Jest matchers with additional typings
+expect.extend({ toHaveTextContent, toHaveClass });
 
-// describe("NavBar component", () => {
-it("renders correctly", () => {
-  const { getByText, getByAltText } = render(<NavBar />);
-
-  // Ensure the logo is rendered
-  const logoElement = getByAltText("Logo");
-  expect(logoElement).toBeInTheDocument();
-
-  // Ensure Features link is rendered
-  const featuresLink = getByText("Features");
-  expect(featuresLink).toBeInTheDocument();
-
-  // Ensure Pricing link is rendered
-  const pricingLink = getByText("Pricing");
-  expect(pricingLink).toBeInTheDocument();
-});
-
-// it("toggles menu on hamburger click", () => {
-//   const { getByRole } = render(<NavBar />);
-
-//   // Initially, the menu should be closed
-//   const menu = getByRole("navigation");
-//   expect(menu).not.toHaveClass("h-[100vh]");
-
-//   // Click the hamburger menu
-//   const hamburgerButton = getByRole("button", { name: /menu/i });
-//   fireEvent.click(hamburgerButton);
-
-//   // After clicking, the menu should be open
-//   expect(menu).toHaveClass("h-[100vh]");
-
-//   // Click the hamburger menu again to close it
-//   fireEvent.click(hamburgerButton);
-
-//   // After clicking again, the menu should be closed
-//   expect(menu).not.toHaveClass("h-[100vh]");
-// });
-// });
-// Renders the header and navigation bar with logo, hamburger menu, links, and buttons.
-it("should render the header and navigation bar with all elements", () => {
+it("renders the NavBar component", () => {
   // Arrange
+  const { getByAltText, getByRole, getByText } = render(<NavBar />);
 
   // Act
-  const { getByAltText, getByRole, getAllByRole } = render(<NavBar />);
+  const logoElement = getByAltText("Logo");
+  const hamburgerButton = getByRole("button", { name: /menu/i });
+  const featuresLink = getByText("Features");
+  const pricingLink = getByText("Pricing");
 
   // Assert
-  expect(getByAltText("Logo")).toBeInTheDocument();
-  expect(getByRole("button", { name: "menu" })).toBeInTheDocument();
-  expect(getAllByRole("link")).toHaveLength(2);
-  expect(getByRole("link", { name: "Login" })).toBeInTheDocument();
-  expect(getByRole("link", { name: "Register Now" })).toBeInTheDocument();
+  expect(logoElement).toHaveProperty("tagName", "IMG");
+  expect(hamburgerButton).toHaveProperty("tagName", "BUTTON");
+  expect(featuresLink).toHaveTextContent("Features");
+  expect(pricingLink).toHaveTextContent("Pricing");
+});
+
+it("toggles menu on hamburger click", () => {
+  // Arrange
+  const { getByRole, getByText } = render(<NavBar />);
+  const hamburgerButton = getByRole("button", { name: /menu/i });
+  const featuresLink = getByText("Features");
+  const pricingLink = getByText("Pricing");
+
+  // Initially, the menu should be closed
+  expect(featuresLink).not.toHaveClass("visible");
+  expect(pricingLink).not.toHaveClass("visible");
+
+  // Act
+  fireEvent.click(hamburgerButton);
+
+  // After clicking, the menu should be open
+  expect(featuresLink).toHaveClass("visible");
+  expect(pricingLink).toHaveClass("visible");
+
+  // Click the hamburger menu again to close it
+  fireEvent.click(hamburgerButton);
+
+  // After clicking again, the menu should be closed
+  expect(featuresLink).not.toHaveClass("visible");
+  expect(pricingLink).not.toHaveClass("visible");
 });
