@@ -305,6 +305,7 @@ const DashboardPage: React.FC = () => {
         console.log("Shorturl", shortUrl);
         console.log(qrCode, "qrcode");
         setQrCode(qrCode);
+
         getUserData();
       } else {
         console.error("Error", response.statusText);
@@ -319,7 +320,7 @@ const DashboardPage: React.FC = () => {
   };
 
   return (
-    <section className="dashboard-section h-full">
+    <section className="dashboard-section">
       <header className="px-[1em] sm:px-[2em]  py-[1em] lg:py-[2em] w-full ">
         <nav className="flex flex-col lg:flex-row lg:justify-between   gap-7 sm:gap-4 ">
           {/* Useful in Mobile View */}
@@ -602,36 +603,10 @@ const DashboardPage: React.FC = () => {
                         )}
                       </span>
                     </td>
-
-                    {/* <td className="flex border-none justify-center">
-                      <button className="text-2xl">
-                        <ion-icon name="trash-outline"></ion-icon>
-                      </button>
-                    </td> */}
                   </tr>
                 );
               })}
             </tbody>
-
-            {/* {tabledData &&
-              tabledData.map((data: any) => {
-                return (
-                  <tbody key={data.id}>
-                    <tr className="">
-                      {/* <table> */}
-
-            {/* <tr> */}
-            {/* <td>{data.original_link}</td>
-                      <td>{data.shortened_url}</td>
-                      <td>{data.created_at_date}</td>
-                      <td>{data.status}</td>
-                      <td>{data.clicks}</td> */}
-            {/* </tr> */}
-            {/* </table> */}
-            {/* </tr>
-                  </tbody>
-                );
-              })} */}
           </table>
         )}
       </div>

@@ -1,26 +1,17 @@
 import Features from "../../components/Features";
 import Pricing from "../../components/Pricing";
 import NavBar from "../../components/Nav";
-// import ToggleSwitch from "../../components/ToggleSwitch";
 import Form from "../../components/FormUrl";
 import ShortLink from "../../components/ShortenedLink";
 import Footer from "../../components/Footer";
 import "./landing.css";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-// import axios from "axios";
-// import { env } from "node:process";
-// import process from "../../../token.env"
-// import QRCode from "qrcode.react";
-
-// import InputLink from "../../assets/link.png";
-// import QuestionCircle from "../../assets/question-circle.png";
 import LaptopTable from "../../assets/Frame 39.png";
 import MobileTable from "../../assets/Frame 39 (1).png";
 import Spinner from "../../components/Spinner";
 
 const LandingPage: React.FC = () => {
-  // const [url, setUrl] = useState("");
   const [shortUrl, setShortUrl] = useState("");
   const [qrCode, setQrCode] = useState("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -28,7 +19,6 @@ const LandingPage: React.FC = () => {
   const [errorMessage, setErrorMessage] = useState<null>(null);
   const [count, setCount] = useState<number>(0);
   const [countMessage, setCountMessage] = useState<boolean>(false);
-  // const [copy, setCopy] = useState(false);
 
   const handleFormSubmit = async (longUrl: string) => {
     setIsLoading(true);
@@ -138,10 +128,6 @@ const LandingPage: React.FC = () => {
             {countMessage && (
               <p className="text-sm flex justify-center items-center text-center gap-2 text-primaryLite">
                 <span>
-                  {/* You can create{" "}
-                <span className="text-primaryPink font-semibold">05</span> more
-                links.
-                <br className="md:hidden block"></br>{" "} */}
                   <Link
                     to="/register"
                     className="underline decoration-primaryBlue sm:no-underline font-semibold sm:font-normal cursor-pointer sm:hover:underline"
