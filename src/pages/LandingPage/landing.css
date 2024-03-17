@@ -71,15 +71,16 @@
   }
 }
 
-.landing-page-div {
-  background-image: url(../src/assets/Group\ 17.png);
-  /* background-image: url(/linkly/public/Group\ 17.png); */
+/* .landing-page-div {
+  background-image: url(../../assets/Group\ 17.png);
+  /* background-image: url(../src/assets/Group\ 17.png); */
+/* background-image: url(/linkly/public/Group\ 17.png); *
   background-size: 100%;
   background-repeat: no-repeat;
   background-color: #0b101b;
-}
+} */
 
-@media screen and (max-width: 768px) {
+/* @media screen and (max-width: 768px) {
   :root {
     background-image: none;
   }
@@ -89,4 +90,4 @@
     background-size: 100%;
     background-repeat: no-repeat;
   }
-}
+}  */
