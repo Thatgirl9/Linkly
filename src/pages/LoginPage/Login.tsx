@@ -41,7 +41,14 @@ const LoginPage: React.FC = () => {
         password,
       });
       if (error) {
-        setErrorMessage("Error signing in: " + error.message);
+        if (error.message === "Email not confirmed") {
+          setErrorMessage(
+            "Email not confirmed. Please check your email for the confirmation link."
+          );
+        } else {
+          setErrorMessage("Error signing in: " + error.message);
+        }
+
         throw error;
       }
 
@@ -57,7 +64,13 @@ const LoginPage: React.FC = () => {
       }
     } catch (err: any) {
       console.error(err);
-      setErrorMessage(err.message);
+      if (err.message === "Email not confirmed") {
+        setErrorMessage(
+          "Email not confirmed. Please check your email for the confirmation link."
+        );
+      } else {
+        setErrorMessage(err.message);
+      }
     }
   };
 
@@ -76,18 +89,6 @@ const LoginPage: React.FC = () => {
     setPassword(value);
     console.log(value, "Checking password");
   };
-
-  // const logInGoogle = async () => {
-  //   const { data, error } = await supabase.auth.signInWithOAuth({
-  //     provider: "google",
-  //   });
-
-  //   if (error) {
-  //     console.error("Error signing in with Google:", error);
-  //   } else {
-  //     console.log("Signed in with Google:", data);
-  //   }
-  // };
 
   return (
     <section className="bg-primaryGrey h-[100dvh] md:h-screen lg:h-fit pb-[5em] flex justify-center items-center ">
@@ -151,7 +152,6 @@ const LoginPage: React.FC = () => {
               <button
                 type="submit"
                 className="p-2 w-full bg-primaryBlue rounded-lg font-semibold shadow-inner shadow-primaryBlue"
-                // onClick={logIn}
               >
                 Login
               </button>
