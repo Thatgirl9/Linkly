@@ -37,8 +37,6 @@
 
 .landing-page-div {
   background-image: url(../src/assets/Group\ 17.png);
-  /* background-image: url(../src/assets/Group\ 17.png); */
-  /* background-image: url(/linkly/public/Group\ 17.png); */
   background-size: 100%;
   background-repeat: no-repeat;
   background-color: #0b101b;
@@ -50,7 +48,7 @@
   }
 
   .landing-page-div {
-    background-image: url(../src/assets/Group\ 17.png);
+    background-image: url(../src/assets/Cubes.png);
     background-size: 100%;
     background-repeat: no-repeat;
   }
