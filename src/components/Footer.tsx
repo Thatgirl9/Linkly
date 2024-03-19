@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import Icon from "../assets/Group 18.png";
 import "animate.css";
-// import ArrowUp from "../assets/FooterAssets/arrow-up-outline.svg";
 
 const Footer: React.FC = () => {
   const [isIntersecting, setIsIntersecting] = useState(false);

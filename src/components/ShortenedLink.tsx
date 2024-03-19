@@ -7,10 +7,8 @@ import QrCode from "./QRCode";
 const ShortLink: React.FC<{
   url: string;
   qrCode: string;
-  // toDataUrl: () => string;
 }> = ({ url }) => {
   const [copied, setCopied] = useState(false);
-  // const [qrCode, setQrCode] = useState("");
 
   const copyToClipboard = (copied: boolean) => {
     navigator.clipboard.writeText(url);

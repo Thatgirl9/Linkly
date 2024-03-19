@@ -3,12 +3,7 @@ import { useState } from "react";
 const PasswordInput: React.FC<{
   onChange: (password: string) => void;
   placeholder: string;
-  // style: CSSProperties;
 }> = ({ onChange, placeholder }) => {
-  // PasswordInput.propTypes = {
-  //   onPasswordChange: PropTypes.func.isRequired,
-  // };
-
   const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState("");
 

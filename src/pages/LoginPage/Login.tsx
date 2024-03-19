@@ -2,11 +2,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import PasswordInput from "../../components/PasswordInput";
 import { supabase } from "../../config/supabaseClient.js";
-// import { createClient, SupabaseClient } from "@supabase/supabase-js";
-
-// import Line from "../../assets/LoginPage/Vector 8.svg";
-// import GoogleIcon from "../../assets/LoginPage/logo_googleg_48dp.png";
-// import AppleLogo from "../../assets/LoginPage/Path.svg";
 import "./login.css";
 import { useState } from "react";
 
@@ -170,48 +165,6 @@ const LoginPage: React.FC = () => {
             </div>
           </div>
         </form>
-
-        {/* <div className="pt-[1em]">
-          <div>
-            <p className="flex items-center justify-center w-full gap-4 font-semibold">
-              <span>
-                <img src={Line} alt="Line" className="w-[5em]" />
-              </span>
-              <span>Or with</span>
-              <span>
-                <img src={Line} alt="Line" className="w-[5em]" />
-              </span>
-            </p>
-          </div>
-
-          <div className="flex items-center justify-center gap-3 pt-[1em]">
-            <button
-              className="flex items-center justify-center gap-2 border border-primaryBlue bg-primaryBlack p-1 px-2 rounded-md "
-              onClick={logInGoogle}
-            >
-              <span>
-                <img
-                  src={GoogleIcon}
-                  alt="Google Icon"
-                  width="20px"
-                  height="20px"
-                />
-              </span>
-              Google
-            </button>
-            <button className="flex items-center justify-center gap-2 border border-primaryBlue bg-primaryBlack p-1 px-2 rounded-md ">
-              <span>
-                <img
-                  src={AppleLogo}
-                  alt="Google Icon"
-                  width="17px"
-                  height="17px"
-                />
-              </span>
-              Apple
-            </button>
-          </div>
-            </div> */}
       </div>
     </section>
   );

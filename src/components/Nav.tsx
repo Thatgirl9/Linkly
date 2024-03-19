@@ -2,7 +2,6 @@ import { useState } from "react";
 import Icon from "../assets/Group 18.png";
 import SignIn from "../assets/sign-in.png";
 import { Link } from "react-router-dom";
-// import { ionicon } from "@ionic/react";
 
 const NavBar: React.FC = () => {
   const [open, setOpen] = useState(false);
