@@ -1,0 +1,164 @@
+{
+  "result": [
+    {
+      "scriptId": "1416",
+      "url": "file:///C:/Users/Favour%20Ukonu/OneDrive/Documents/Linkly/linkly/src/test/setup.ts",
+      "functions": [
+        {
+          "functionName": "",
+          "ranges": [{ "startOffset": 0, "endOffset": 691, "count": 1 }],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "",
+          "ranges": [{ "startOffset": 13, "endOffset": 691, "count": 1 }],
+          "isBlockCoverage": true
+        }
+      ]
+    },
+    {
+      "scriptId": "1753",
+      "url": "file:///C:/Users/Favour%20Ukonu/OneDrive/Documents/Linkly/linkly/src/components/Nav.test.tsx",
+      "functions": [
+        {
+          "functionName": "",
+          "ranges": [{ "startOffset": 0, "endOffset": 2287, "count": 1 }],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "",
+          "ranges": [{ "startOffset": 13, "endOffset": 2287, "count": 1 }],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "",
+          "ranges": [{ "startOffset": 576, "endOffset": 997, "count": 1 }],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "",
+          "ranges": [{ "startOffset": 615, "endOffset": 993, "count": 1 }],
+          "isBlockCoverage": true
+        }
+      ]
+    },
+    {
+      "scriptId": "1757",
+      "url": "file:///C:/Users/Favour%20Ukonu/OneDrive/Documents/Linkly/linkly/src/utils/test-utils.tsx",
+      "functions": [
+        {
+          "functionName": "",
+          "ranges": [{ "startOffset": 0, "endOffset": 2617, "count": 1 }],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "",
+          "ranges": [{ "startOffset": 13, "endOffset": 2617, "count": 1 }],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "get",
+          "ranges": [{ "startOffset": 871, "endOffset": 916, "count": 0 }],
+          "isBlockCoverage": false
+        },
+        {
+          "functionName": "",
+          "ranges": [{ "startOffset": 953, "endOffset": 997, "count": 1 }],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "customRender",
+          "ranges": [{ "startOffset": 1000, "endOffset": 1188, "count": 1 }],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "wrapper",
+          "ranges": [{ "startOffset": 1138, "endOffset": 1164, "count": 3 }],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "get",
+          "ranges": [{ "startOffset": 1286, "endOffset": 1314, "count": 1 }],
+          "isBlockCoverage": true
+        }
+      ]
+    },
+    {
+      "scriptId": "1848",
+      "url": "file:///C:/Users/Favour%20Ukonu/OneDrive/Documents/Linkly/linkly/src/components/Nav.tsx",
+      "functions": [
+        {
+          "functionName": "",
+          "ranges": [{ "startOffset": 0, "endOffset": 17662, "count": 1 }],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "",
+          "ranges": [{ "startOffset": 13, "endOffset": 17662, "count": 1 }],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "NavBar",
+          "ranges": [
+            { "startOffset": 832, "endOffset": 9406, "count": 3 },
+            { "startOffset": 2179, "endOffset": 2188, "count": 0 },
+            { "startOffset": 2189, "endOffset": 2197, "count": 2 },
+            { "startOffset": 3424, "endOffset": 3462, "count": 0 },
+            { "startOffset": 3463, "endOffset": 3498, "count": 2 }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "onClick",
+          "ranges": [{ "startOffset": 1919, "endOffset": 1939, "count": 0 }],
+          "isBlockCoverage": false
+        },
+        {
+          "functionName": "",
+          "ranges": [
+            { "startOffset": 3807, "endOffset": 4858, "count": 4 },
+            { "startOffset": 4153, "endOffset": 4175, "count": 0 }
+          ],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "onClick",
+          "ranges": [{ "startOffset": 4263, "endOffset": 4283, "count": 0 }],
+          "isBlockCoverage": false
+        }
+      ]
+    },
+    {
+      "scriptId": "1850",
+      "url": "file:///C:/Users/Favour%20Ukonu/OneDrive/Documents/Linkly/linkly/src/assets/Group%2018.png",
+      "functions": [
+        {
+          "functionName": "",
+          "ranges": [{ "startOffset": 0, "endOffset": 614, "count": 1 }],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "",
+          "ranges": [{ "startOffset": 13, "endOffset": 614, "count": 1 }],
+          "isBlockCoverage": true
+        }
+      ]
+    },
+    {
+      "scriptId": "1851",
+      "url": "file:///C:/Users/Favour%20Ukonu/OneDrive/Documents/Linkly/linkly/src/assets/sign-in.png",
+      "functions": [
+        {
+          "functionName": "",
+          "ranges": [{ "startOffset": 0, "endOffset": 609, "count": 1 }],
+          "isBlockCoverage": true
+        },
+        {
+          "functionName": "",
+          "ranges": [{ "startOffset": 13, "endOffset": 609, "count": 1 }],
+          "isBlockCoverage": true
+        }
+      ]
+    }
+  ]
+}
