@@ -13,11 +13,27 @@
 
 Linkly is a URL shortener that takes a long link and returns a shortened link, it generates a QR Code for the shortened link and provides analytics/dashboard to a signed-in user.  
 
-#### How does it work? 
+* Home Page
+
+![Screenshot (195)](https://github.com/Thatgirl9/Linkly/assets/108234015/34272c0e-e4bf-496d-8497-5c5c3c7d502a)
+
+### How does it work? 
 
 Input a long link into the place "Enter Link here", click on the button "Shorten", wait for some seconds and your shortened link is ready.
 
+* Input Long Link
+
+![Screenshot (196)](https://github.com/Thatgirl9/Linkly/assets/108234015/beab045c-4bcb-4163-8615-6e6052df7086)
+
+* Result-Shortened Link and QR Code.
+
+![Screenshot (197)](https://github.com/Thatgirl9/Linkly/assets/108234015/ed510ebf-9aef-4458-bd25-6ca72b605156)
+
 To see your Dashboard you have to Register if you're new to Linkly or Login if you're an existing user.
+
+* Dashboard Page
+
+![Screenshot (198)](https://github.com/Thatgirl9/Linkly/assets/108234015/a9cd3571-1f15-4408-b4c8-e23015522d61)
 
 <a name="technologies"></a>
 ### Technologies Used 💻
