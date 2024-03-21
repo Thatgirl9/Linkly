@@ -1,5 +1,12 @@
 import { useState } from "react";
 
+export const handleInputChange =
+  (onChange: (password: string) => void) =>
+  (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newPassword = e.target.value;
+    onChange(newPassword);
+  };
+
 const PasswordInput: React.FC<{
   onChange: (password: string) => void;
   placeholder: string;
@@ -7,14 +14,14 @@ const PasswordInput: React.FC<{
   const [showPassword, setShowPassword] = useState(false);
   const [password, setPassword] = useState("");
 
-  const handleTogglePassword = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  function handleInputChange(e: React.ChangeEvent<HTMLInputElement>) {
     const newPassword = e.target.value;
     setPassword(newPassword);
     onChange(newPassword);
+  }
+
+  const handleTogglePassword = () => {
+    setShowPassword(!showPassword);
   };
 
   return (
@@ -22,6 +29,7 @@ const PasswordInput: React.FC<{
       <input
         type={showPassword ? "text" : "password"}
         value={password}
+        data-testid="password-input"
         onChange={handleInputChange}
         // style={style}
         placeholder={placeholder}

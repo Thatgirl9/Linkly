@@ -1,6 +1,8 @@
 import BlueCheck from "../assets/PricingAssets/check-circle.svg";
 import WhiteCheck from "../assets/PricingAssets/check-circle (1).svg";
 
+// COMPONENT TESTING
+
 describe("Pricing", () => {
   it("Renders the Free Plan", () => {
     const FreePlan = [

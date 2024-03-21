@@ -1,7 +1,8 @@
 import Form from "./FormUrl";
 import { fireEvent, render, screen } from "../utils/test-utils";
 
-describe("Button should show", () => {
+// COMPONENT TESTING
+describe("Valid Form Functionality", () => {
   it("Should receive a link", () => {
     const onSubmit = function (url: string) {
       return url;
