@@ -235,17 +235,18 @@ const DashboardPage: React.FC = () => {
     setIsLoading(true);
 
     const linkValid = /^https?:\/\/[^\s/$.?#].[^\s]*$/.test(longUrl);
-
-    if (!linkValid) {
-      setInValidLink(true);
-      setIsLoading(false);
-      return;
-    }
+    console.log(linkValid);
 
     const updateLinkValid =
       longUrl.startsWith("http://") || longUrl.startsWith("https://")
         ? longUrl
         : `https://${longUrl}`;
+
+    if (!updateLinkValid) {
+      setInValidLink(true);
+      setIsLoading(false);
+      return;
+    }
 
     setInValidLink(false);
     console.log(updateLinkValid);
@@ -545,6 +546,7 @@ const DashboardPage: React.FC = () => {
                   <tr key={data.id} className="bg-primaryGrey font-light">
                     <td>{data.original_link}</td>
                     <td>{data.shortened_url}</td>
+                    {/* <td> {shortUrl && <ShortLink url={shortUrl} qrCode={qrCode} />}</td> */}
                     <td>
                       {moment(data.created_at_date).format(
                         "MMMM Do YYYY, h:mm:ss a"

@@ -25,18 +25,19 @@ const LandingPage: React.FC = () => {
 
     // Check if the input is a valid URL
     const linkValid = /^https?:\/\/[^\s/$.?#].[^\s]*$/.test(longUrl);
-
-    if (!linkValid) {
-      setInValidLink(true);
-      setIsLoading(false);
-      return;
-    }
+    console.log(linkValid);
 
     // Ensure the link has http:// or https:// prefix
     const updateLinkValid =
       longUrl.startsWith("http://") || longUrl.startsWith("https://")
         ? longUrl
         : `https://${longUrl}`;
+
+    if (!updateLinkValid) {
+      setInValidLink(true);
+      setIsLoading(false);
+      return;
+    }
 
     setInValidLink(false);
     console.log(updateLinkValid);
